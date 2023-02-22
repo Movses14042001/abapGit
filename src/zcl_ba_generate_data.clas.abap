@@ -17,6 +17,7 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
 
     DATA: lt_prod_grs  TYPE TABLE OF zbm_d_prod_group,
+          lt_prod      TYPE TABLE OF zbm_d_product,
           lt_phases    TYPE TABLE OF zbm_d_phase,
           lt_markets   TYPE TABLE OF zbm_d_market,
           lt_uom       TYPE TABLE OF zbm_d_uom.
@@ -106,6 +107,14 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
     DELETE FROM zbm_d_uom.
 *   insert the new table entries
     INSERT zbm_d_uom FROM TABLE @lt_uom.
+
+    lt_prod = VALUE #( ( width = '11' depth = '11' height = '11' pg_id = '1' phase_id = '1' prod_id = '1' ) ).
+
+
+     DELETE FROM zbm_d_product.
+*   insert the new table entries
+    INSERT zbm_d_product FROM TABLE @lt_prod.
+
 
 *   check the result
     SELECT * FROM zbm_d_uom INTO TABLE @lt_uom.

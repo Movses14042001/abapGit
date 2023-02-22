@@ -9,7 +9,9 @@
 [
 "I_CURRENCY",
 "ZBM_I_MARKET",
-"ZBM_I_ORDER"
+"ZBM_I_ORDER",
+"ZBM_I_PHASE",
+"ZBM_I_PROD_GROUP"
 ],
 "BASE":
 [],

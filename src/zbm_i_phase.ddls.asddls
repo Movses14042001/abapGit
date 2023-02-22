@@ -8,6 +8,6 @@
     dataClass: #MIXED
 }
 define view entity ZBM_I_PHASE as select from zbm_d_phase {
-    key phaseid as Phaseid,
+    key phaseid as PhaseId,
     phase as Phase
 }

@@ -1,0 +1,39 @@
+managed implementation in class zbp_bm_i_product unique;
+strict ( 1 );
+
+define behavior for ZBM_I_PRODUCT //alias <alias_name>
+persistent table zbm_d_product
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _Market { create; }
+  association _Orrder { create; }
+}
+
+define behavior for ZBM_I_MARKET //alias <alias_name>
+persistent table zbm_d_prod_mrkt
+lock dependent by _Product
+authorization dependent by _Product
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) ProdUuid;
+  association _Product;
+}
+
+define behavior for ZBM_I_ORDER //alias <alias_name>
+persistent table zbm_d_mrkt_order
+lock dependent by _Product
+authorization dependent by _Product
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) ProdUuid;
+  association _Product;
+}
