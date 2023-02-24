@@ -25,7 +25,7 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     Depth,
     @EndUserText.label: 'Width'
     Width,
-    @EndUserText.label: 'Size'
+    @EndUserText.label: 'Size of Dimensions'
     SizeUom,
     @Semantics.amount.currencyCode: 'PriceCurrency'
     @EndUserText.label: 'Net Price'

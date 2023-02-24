@@ -1,20 +1,44 @@
 managed implementation in class zbp_bm_i_product unique;
 strict ( 1 );
 
-define behavior for ZBM_I_PRODUCT //alias <alias_name>
+define behavior for ZBM_I_PRODUCT alias Product
 persistent table zbm_d_product
 lock master
 authorization master ( instance )
-//etag master <field_name>
+etag master ChangeTime
 {
   create;
   update;
   delete;
   association _Market { create; }
   association _Orrder { create; }
+
+field ( numbering : managed, readonly ) ProdUuid;
+field ( mandatory ) ProdId, PgId, Price ;
+
+  mapping for zbm_d_product
+  {
+
+    ProdUuid      = prod_uuid;
+    ProdId        = prod_id;
+    PgId          = pg_id;
+    PhaseId       = phase_id;
+    Height        = height;
+    Depth         = depth;
+    Width         = width;
+    SizeUom       = size_uom;
+    Price         = price;
+    PriceCurrency = price_currency;
+    taxrate       = Taxrate;
+    CreatedBy     = created_by;
+    CreationTime  = creation_time;
+    ChangedBy     =  changed_by;
+    ChangeTime    =  Change_time;
+  }
+
 }
 
-define behavior for ZBM_I_MARKET //alias <alias_name>
+define behavior for ZBM_I_MARKET alias Market
 persistent table zbm_d_prod_mrkt
 lock dependent by _Product
 authorization dependent by _Product
@@ -24,9 +48,25 @@ authorization dependent by _Product
   delete;
   field ( readonly ) ProdUuid;
   association _Product;
+
+  mapping for zbm_d_prod_mrkt
+  {
+
+    ProdUuid     = prod_uuid ;
+    MrktUuid     = mrkt_uuid;
+    Mrktid       = mrktid;
+    Status       = status;
+    Startdate    = startdate;
+    Enddate      = enddate;
+    CreatedBy    = created_by;
+    CreationTime = creation_time;
+    ChangedBy    = changed_by;
+    ChangeTime   = change_time;
+  }
+
 }
 
-define behavior for ZBM_I_ORDER //alias <alias_name>
+define behavior for ZBM_I_ORDER alias Orrder
 persistent table zbm_d_mrkt_order
 lock dependent by _Product
 authorization dependent by _Product
@@ -36,4 +76,25 @@ authorization dependent by _Product
   delete;
   field ( readonly ) ProdUuid;
   association _Product;
+
+
+  mapping for zbm_d_mrkt_order
+  {
+
+    ProdUuid     = prod_uuid;
+    MrktUuid     = mrkt_uuid;
+    OrderUuid    = order_uuid;
+    Orderid      = orderid;
+    Quantity     = quantity;
+    DeliveryDate = delivery_date;
+    Netamount    = netamount;
+    Grossamount  = grossamount;
+    Amountcurr   = amountcurr;
+    CreatedBy    = created_by;
+    CreationTime = creation_time;
+    ChangedBy    = changed_by;
+    ChangeTime   = change_time;
+
+   }
+
 }

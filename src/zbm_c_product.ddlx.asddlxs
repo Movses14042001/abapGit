@@ -17,12 +17,12 @@ annotate view ZBM_C_PRODUCT with
                label: 'Product' ,
                position:  10 },
 
-                 {id:    'Order',
+                 {id:    'Market',
                purpose:   #STANDARD,
                type: #LINEITEM_REFERENCE,
-               label: 'Order',
+               label: 'Market',
                position:  20,
-               targetElement: '_Orrder'} ] 
+               targetElement: '_Market'} ] 
 
                
                
