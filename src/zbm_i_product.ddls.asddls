@@ -14,7 +14,7 @@ define root  view entity ZBM_I_PRODUCT as select from zbm_d_product as Product
   composition [0..*] of ZBM_I_MARKET as _Market
   composition [0..*] of ZBM_I_ORDER as _Orrder
   association to I_Currency as _Currency on $projection.PriceCurrency = _Currency.Currency
-  association to ZBM_I_PROD_GROUP as _PGroup  on $projection.PgId = _PGroup.Pgid
+  association to ZBM_I_PROD_GROUP as _PGroup  on $projection.PgId = _PGroup.PgId 
   association to ZBM_I_PHASE as _Phase on $projection.PhaseId = _Phase.PhaseId
  
   

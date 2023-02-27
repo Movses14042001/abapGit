@@ -50,9 +50,6 @@ annotate view ZBM_C_PRODUCT with
     @UI:{ lineItem: [{position: 60 }],
         identification: [{position: 60 }] }
     Width;
-    @UI:{ lineItem: [{position: 70 }],
-        identification: [{position: 70 }] }
-    SizeUom;
     @UI:{ lineItem: [{position: 80 }],
         identification: [{position: 80 }], 
          selectionField: [{position: 80}] }

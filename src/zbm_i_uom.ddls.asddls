@@ -7,7 +7,7 @@
     sizeCategory: #S,
     dataClass: #MIXED
 }
-define view entity ZBM_I_UOM as select from zbm_d_uom {
+define view entity ZBM_I_UOM as select from zbm_d_uom  as Ucom {
     key msehi as Msehi,
     dimid as Dimid,
     isocode as Isocode

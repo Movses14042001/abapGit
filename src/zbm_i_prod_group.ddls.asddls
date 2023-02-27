@@ -7,8 +7,9 @@
     sizeCategory: #S,
     dataClass: #MIXED
 }
-define view entity ZBM_I_PROD_GROUP as select from zbm_d_prod_group {
-    key pgid as Pgid,
-    pgname as Pgname,
-    imageurl as Imageurl
+define view entity ZBM_I_PROD_GROUP as select from zbm_d_prod_group
+{
+    key pg_id as PgId,
+    pg_name as PgName,
+    image_url as ImageUrl
 }

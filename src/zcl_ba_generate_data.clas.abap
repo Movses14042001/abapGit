@@ -16,21 +16,22 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
 
-    DATA: lt_prod_grs  TYPE TABLE OF zbm_d_prod_group,
+    DATA:
+          lt_prod_grs  TYPE TABLE OF zbm_d_prod_group,
           lt_prod      TYPE TABLE OF zbm_d_product,
           lt_phases    TYPE TABLE OF zbm_d_phase,
           lt_markets   TYPE TABLE OF zbm_d_market,
           lt_uom       TYPE TABLE OF zbm_d_uom.
 
 *** PRODUCT GROUPS
-*   fill internal table (itab)
-
+**   fill internal table (itab)
+*
     lt_prod_grs = VALUE #(
-        ( pgid  = '1' pgname = 'Microwave'      imageurl = 'https://png.pngtree.com/png-clipart/20190517/original/pngtree-vector-microwave-oven-icon-png-image_4015182.jpg' )
-        ( pgid  = '2' pgname = 'Coffee Machine' imageurl = 'https://icon-library.com/images/coffee-maker-icon/coffee-maker-icon-13.jpg' )
-        ( pgid  = '3' pgname = 'Waffle Iron'    imageurl = 'https://previews.123rf.com/images/anatolir/anatolir1810/anatolir181004863/110698658-waffle-maker-icon-outline-style.jpg' )
-        ( pgid  = '4' pgname = 'Blender'        imageurl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRSLnFTOSs5ZV0d8pwhPzs4KANsvq1oZ7hyrg&usqp=CAU' )
-        ( pgid  = '5' pgname = 'Cooker'         imageurl = 'https://st4.depositphotos.com/18657574/22404/v/1600/depositphotos_224044856-stock-illustration-stove-concept-vector-linear-icon.jpg' )
+        ( pg_id  = '1' pg_name = 'Microwave'      image_url = 'https://png.pngtree.com/png-clipart/20190517/original/pngtree-vector-microwave-oven-icon-png-image_4015182.jpg' )
+        ( pg_id  = '2' pg_name = 'Coffee Machine' image_url = 'https://icon-library.com/images/coffee-maker-icon/coffee-maker-icon-13.jpg' )
+        ( pg_id  = '3' pg_name = 'Waffle Iron'    image_url = 'https://previews.123rf.com/images/anatolir/anatolir1810/anatolir181004863/110698658-waffle-maker-icon-outline-style.jpg' )
+        ( pg_id  = '4' pg_name = 'Blender'        image_url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRSLnFTOSs5ZV0d8pwhPzs4KANsvq1oZ7hyrg&usqp=CAU' )
+        ( pg_id  = '5' pg_name = 'Cooker'         image_url = 'https://st4.depositphotos.com/18657574/22404/v/1600/depositphotos_224044856-stock-illustration-stove-concept-vector-linear-icon.jpg' )
      ).
 
 *   Delete the possible entries in the database table - in case it was already filled
@@ -39,7 +40,7 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
     INSERT zbm_d_prod_group FROM TABLE @lt_prod_grs.
 
 *   check the result
-    SELECT * FROM zbm_d_prod_group INTO TABLE @lt_prod_grs.
+*    SELECT * FROM zbm_d_prod_group INTO TABLE @lt_prod_grs.
     out->write( sy-dbcnt ).
     out->write( 'product groups data inserted successfully!').
 

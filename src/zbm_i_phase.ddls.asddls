@@ -7,7 +7,7 @@
     sizeCategory: #S,
     dataClass: #MIXED
 }
-define view entity ZBM_I_PHASE as select from zbm_d_phase {
-    key phaseid as PhaseId,
+define view entity ZBM_I_PHASE as select from zbm_d_phase as Phase{
+    key phaseid as PhaseId, 
     phase as Phase
 }

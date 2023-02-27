@@ -1,10 +1,11 @@
-managed implementation in class zbp_bm_i_product unique;
-strict ( 1 );
+managed;
+//Strict ( 1 );
 
 define behavior for ZBM_I_PRODUCT alias Product
+implementation in class zbp_bm_i_product unique
 persistent table zbm_d_product
 lock master
-authorization master ( instance )
+//authorization master ( instance )
 etag master ChangeTime
 {
   create;
@@ -15,6 +16,15 @@ etag master ChangeTime
 
 field ( numbering : managed, readonly ) ProdUuid;
 field ( mandatory ) ProdId, PgId, Price ;
+
+
+determination setFirstPhase on modify { create; }
+
+validation validatePG on save { field PgId; create; }
+validation prodId on save { field ProdId; create; }
+
+action ( features : instance ) makeCopy result [1] $self;
+action ( features : instance ) moveToNextPhase result [1] $self;
 
   mapping for zbm_d_product
   {
@@ -39,15 +49,27 @@ field ( mandatory ) ProdId, PgId, Price ;
 }
 
 define behavior for ZBM_I_MARKET alias Market
+implementation in class zbp_bm_i_market unique
 persistent table zbm_d_prod_mrkt
 lock dependent by _Product
-authorization dependent by _Product
+//authorization dependent by _Product
 //etag master <field_name>
 {
   update;
   delete;
+
+  field (numbering : managed, readonly ) MrktUuid ;
   field ( readonly ) ProdUuid;
   association _Product;
+
+validation validateMarket on save { field Mrktid; create; }
+validation valideStartDate on save { field Startdate; create; }
+validation valideEndDate on save { field Enddate; create; }
+validation checkDuplicates on save { field Mrktid; create; }
+
+
+action ( features : instance ) confirm result [1] $self;
+
 
   mapping for zbm_d_prod_mrkt
   {
@@ -66,10 +88,12 @@ authorization dependent by _Product
 
 }
 
+
 define behavior for ZBM_I_ORDER alias Orrder
+implementation in class zbp_bm_i_order unique
 persistent table zbm_d_mrkt_order
 lock dependent by _Product
-authorization dependent by _Product
+//authorization dependent by _Product
 //etag master <field_name>
 {
   update;
@@ -77,6 +101,13 @@ authorization dependent by _Product
   field ( readonly ) ProdUuid;
   association _Product;
 
+
+determination calculateOrderId on modify { create; }
+determination setCalendarYear on modify { create; }
+determination calculateAmount on modify { create; }
+
+
+validation validateDeliveyDate on save { field DeliveryDate; create; }
 
   mapping for zbm_d_mrkt_order
   {
