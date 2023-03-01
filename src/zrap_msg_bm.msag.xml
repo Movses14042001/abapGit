@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZRAP_MSG_BM</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Message class for RAP project</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZRAP_MSG_BM</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Product Group doesn&apos;t exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZRAP_MSG_BM</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Product ID already exists</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZRAP_MSG_BM</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Market doesn&apos;t exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZRAP_MSG_BM</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Start Date must be greater than today</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZRAP_MSG_BM</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>End Date must be greater than today</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZRAP_MSG_BM</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>End Date must be greater than Start Date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZRAP_MSG_BM</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>This market is already assigned to the product</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZRAP_MSG_BM</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Delivery Date must be greater than Market Start Date</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZRAP_MSG_BM</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Delivery Date must be less than or equal to Market End Date</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

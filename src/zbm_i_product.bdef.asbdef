@@ -14,8 +14,9 @@ etag master ChangeTime
   association _Market { create; }
   association _Orrder { create; }
 
-field ( numbering : managed, readonly ) ProdUuid;
+field ( numbering : managed, readonly ) ProdUuid ;
 field ( mandatory ) ProdId, PgId, Price ;
+field ( readonly ) PhaseId ;
 
 
 determination setFirstPhase on modify { create; }
