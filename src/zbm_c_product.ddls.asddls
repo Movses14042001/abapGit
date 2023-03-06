@@ -11,10 +11,10 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     ProdId,
     @EndUserText.label: 'Product Group'
     @ObjectModel.text.element: ['Pgname']
-    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PROD_GROUP' , element : 'PgId' } }]
+    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PROD_GROUP', element : 'PgId' } }]
     PgId,
     _PGroup.PgName,
-    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PHASE' , element : 'PhaseId' } }]
+    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PHASE', element : 'PhaseId' } }]
     @ObjectModel.text.element: ['Phase']
     PhaseId,
     _Phase.Phase,

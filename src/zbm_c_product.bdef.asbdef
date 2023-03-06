@@ -10,6 +10,10 @@ define behavior for ZBM_C_PRODUCT alias Product
 
   use association _Market { create; }
   use association _Orrder { create; }
+
+   use action moveToNextPhase;
+   use action makeCopy;
+
 }
 
 define behavior for ZBM_C_MARKET alias Market

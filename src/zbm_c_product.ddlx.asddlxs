@@ -37,9 +37,13 @@ annotate view ZBM_C_PRODUCT with
         identification: [{position: 20 }],
         selectionField: [{position: 30}] }
     PgId;
-   @UI:{ lineItem: [{position: 30 }],
-        identification: [{position: 30 }],
-        selectionField: [{position: 20}] }
+
+        @UI: {  lineItem:       [ { position: 30 },
+                             { type: #FOR_ACTION, dataAction: 'moveToNextPhase',   label: 'Move Phase', position : 10} ],
+   
+              identification: [ { position: 30 },
+                             { type: #FOR_ACTION, dataAction: 'moveToNextPhase',   label: 'Move Phase', position : 10} ],
+                              selectionField: [{position: 20}] }
     PhaseId;
   @UI:{ lineItem: [{position: 40 }],
         identification: [{position: 40 }] }

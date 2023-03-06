@@ -8,6 +8,7 @@ define view entity ZBM_C_MARKET as projection on ZBM_I_MARKET as Market
     key ProdUuid,
     key MrktUuid,
     @Search.defaultSearchElement: true
+    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_MARKET_T' , element : 'Mrktid' } }]
     Mrktid,
     @Search.defaultSearchElement: true
     Status,

@@ -1,5 +1,5 @@
 managed;
-//Strict ( 1 );
+//strict (1);
 
 define behavior for ZBM_I_PRODUCT alias Product
 implementation in class zbp_bm_i_product unique
@@ -14,9 +14,9 @@ etag master ChangeTime
   association _Market { create; }
   association _Orrder { create; }
 
-field ( numbering : managed, readonly ) ProdUuid ;
-field ( mandatory ) ProdId, PgId, Price ;
-field ( readonly ) PhaseId ;
+field ( numbering : managed, readonly ) ProdUuid;
+field ( mandatory ) ProdId, PgId, Price;
+field ( readonly ) PhaseId;
 
 
 determination setFirstPhase on modify { create; }
@@ -58,15 +58,19 @@ lock dependent by _Product
 {
   update;
   delete;
+  association _Product;
 
   field (numbering : managed, readonly ) MrktUuid ;
-  field ( readonly ) ProdUuid;
-  association _Product;
+  field ( readonly ) ProdUuid, ChangeTime, ChangedBy, CreationTime, CreatedBy;
+  field ( mandatory ) Mrktid, Startdate;
+  field ( readonly ) Status;
+
 
 validation validateMarket on save { field Mrktid; create; }
 validation valideStartDate on save { field Startdate; create; }
 validation valideEndDate on save { field Enddate; create; }
 validation checkDuplicates on save { field Mrktid; create; }
+
 
 
 action ( features : instance ) confirm result [1] $self;
@@ -99,8 +103,11 @@ lock dependent by _Product
 {
   update;
   delete;
-  field ( readonly ) ProdUuid;
   association _Product;
+
+  field ( readonly ) ProdUuid;
+  field ( numbering : managed, readonly ) MrktUuid, OrderUuid;
+
 
 
 determination calculateOrderId on modify { create; }

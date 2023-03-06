@@ -142,8 +142,8 @@ CLASS zcm_rap_bm IMPLEMENTATION.
       me->if_abap_behv_message~m_severity = severity.
 
 
-    me->productgroup = |{ prodid       ALPHA = OUT }|.
-    me->prodid       = |{ productgroup ALPHA = OUT }|.
+    me->productgroup = |{ productgroup ALPHA = OUT }|.
+    me->prodid       = |{ prodid       ALPHA = OUT }|.
     me->marketid     = |{ marketid     ALPHA = OUT }|.
     me->startdate    = startdate.
     me->enddate      = enddate.
