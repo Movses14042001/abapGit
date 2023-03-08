@@ -15,14 +15,14 @@ define view entity ZBM_I_MARKET as select from zbm_d_prod_mrkt
 
     key prod_uuid as ProdUuid,
     key mrkt_uuid as MrktUuid,
-    mrktid as Mrktid,
-    status as Status,
-    startdate as Startdate,
-    enddate as Enddate,
-    created_by as CreatedBy,
+    mrkt_id       as MrktId,
+    status        as Status,
+    startdate     as Startdate,
+    enddate       as Enddate,
+    created_by    as CreatedBy,
     creation_time as CreationTime,
-    changed_by as ChangedBy,
-    change_time as ChangeTime,
+    changed_by    as ChangedBy,
+    change_time   as ChangeTime,
     
     /* Public Assosiations */
     _Product

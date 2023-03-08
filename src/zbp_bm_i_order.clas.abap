@@ -1,15 +1,5 @@
-class ZBP_BM_I_ORDER definition
-  public
-  abstract
-  final
-  create public .
-
-public section.
-protected section.
-private section.
+CLASS zbp_bm_i_order DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zbm_i_product.
 ENDCLASS.
 
-
-
-CLASS ZBP_BM_I_ORDER IMPLEMENTATION.
+CLASS zbp_bm_i_order IMPLEMENTATION.
 ENDCLASS.

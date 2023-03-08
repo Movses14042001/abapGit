@@ -10,7 +10,7 @@ annotate view ZBM_C_MARKET
    MrktUuid;
     @UI:{ identification : [{ position: 30 }],
          lineItem       : [{ position : 30 }]}
-   Mrktid;
+   MrktId;
     @UI:{ identification : [{ position: 40 }],
          lineItem       : [{ position : 40 }]}
    Status;

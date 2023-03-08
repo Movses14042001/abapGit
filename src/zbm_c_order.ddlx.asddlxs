@@ -1,0 +1,43 @@
+@Metadata.layer: #CORE
+annotate view ZBM_C_ORDER
+    with 
+{
+   @UI:{ identification : [{ position: 10, label: 'UUID' }]}
+   ProdUuid;
+   @UI:{ identification : [{ position: 20 }],
+         lineItem       : [{ position : 20 }]}
+   MrktUuid;
+   @UI:{ identification : [{ position: 20 }],
+         lineItem       : [{ position : 20 }]}
+   OrderUuid;
+   @UI:{ identification : [{ position: 20 }],
+         lineItem       : [{ position : 20 }]}
+   Orderid;
+   @UI:{ identification : [{ position: 20 }],
+         lineItem       : [{ position : 20 }]}
+   Quantity;
+   @UI:{ identification : [{ position: 20 }],
+         lineItem       : [{ position : 20 }]}
+   CalendarYear;
+   @UI:{ identification : [{ position: 20 }],
+         lineItem       : [{ position : 20 }]}
+   DeliveryDate;
+   @UI:{ identification : [{ position: 20 }],
+         lineItem       : [{ position : 20 }]}
+   Netamount;
+   @UI:{ identification : [{ position: 20 }],
+         lineItem       : [{ position : 20 }]}
+   Grossamount;
+   @UI:{ identification : [{ position: 20 }],
+         lineItem       : [{ position : 20 }]}
+   Amountcurr;
+   @UI.hidden: true
+   CreatedBy;
+   @UI.hidden: true
+   CreationTime;
+   @UI.hidden: true
+   ChangedBy;
+   @UI.hidden: true
+   ChangeTime;
+ 
+}

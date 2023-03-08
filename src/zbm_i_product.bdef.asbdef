@@ -81,7 +81,7 @@ action ( features : instance ) confirm result [1] $self;
 
     ProdUuid     = prod_uuid ;
     MrktUuid     = mrkt_uuid;
-    Mrktid       = mrktid;
+
     Status       = status;
     Startdate    = startdate;
     Enddate      = enddate;

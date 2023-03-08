@@ -159,7 +159,7 @@ CLASS lhc_Product IMPLEMENTATION.
                                            severity   = if_abap_behv_message=>severity-error
                                            textid     = ZCM_RAP_BM=>prodgroup_unknown
                                            productgroup = Product-PgId )
-                         %element-ProdId = if_abap_behv=>mk-on )
+                         %element-PgId = if_abap_behv=>mk-on )
           TO reported-Product.
       ENDIF.
     ENDLOOP.
