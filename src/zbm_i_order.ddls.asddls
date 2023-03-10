@@ -11,6 +11,7 @@ define view entity ZBM_I_ORDER as select from zbm_d_mrkt_order as Orrder
 
   /* Associations */
 association to parent ZBM_I_PRODUCT  as _Product   on $projection.ProdUuid = _Product.ProdUuid
+association to ZBM_I_MARKET as _Market on $projection.MrktUuid = _Market.MrktUuid
 association to I_Currency as _Currency on $projection.Amountcurr = _Currency.Currency
  {
     key prod_uuid as ProdUuid,
@@ -32,7 +33,8 @@ association to I_Currency as _Currency on $projection.Amountcurr = _Currency.Cur
     
     /* Public associations */
     _Product,
-    _Currency
+    _Currency,
+    _Market
     
 }
 

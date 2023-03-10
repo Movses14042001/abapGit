@@ -11,6 +11,7 @@ define view entity ZBM_I_MARKET as select from zbm_d_prod_mrkt
 
   /* Assosiations */
   association to parent ZBM_I_PRODUCT as _Product   on $projection.ProdUuid = _Product.ProdUuid
+  association to ZBM_I_MARKET_T as _Market_t on $projection.MrktId  = _Market_t.Mrktid
 {
 
     key prod_uuid as ProdUuid,
@@ -25,5 +26,6 @@ define view entity ZBM_I_MARKET as select from zbm_d_prod_mrkt
     change_time   as ChangeTime,
     
     /* Public Assosiations */
-    _Product
+    _Product,
+    _Market_t
 }

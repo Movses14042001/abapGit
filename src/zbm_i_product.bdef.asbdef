@@ -104,6 +104,7 @@ lock dependent by _Product
   update;
   delete;
   association _Product;
+  association _Market;
 
   field ( readonly ) ProdUuid;
   field ( numbering : managed, readonly ) MrktUuid, OrderUuid;

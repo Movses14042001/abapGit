@@ -11,13 +11,15 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     ProdId,
     @EndUserText.label: 'Product Group'
     @ObjectModel.text.element: ['Pgname']
-    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PROD_GROUP', element : 'PgId' } }]
+    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PROD_GROUP', element: 'PgId' } }]
     PgId,
     _PGroup.PgName,
-    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PHASE', element : 'PhaseId' } }]
+    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PHASE', element: 'PhaseId' } }]
     @ObjectModel.text.element: ['Phase']
+    @EndUserText.label: 'Phase'
     PhaseId,
     _Phase.Phase,
+    _Phase.phascriticality,
     @Semantics.quantity.unitOfMeasure: 'SizeUom'
     @EndUserText.label: 'Height'
     Height,
@@ -28,12 +30,12 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     @Semantics.quantity.unitOfMeasure: 'SizeUom'
     Width,
     @Semantics.unitOfMeasure: true
-    @Consumption.valueHelpDefinition: [{entity : {name : 'ZBM_I_UOM', element : 'Msehi'  } }]
+    @Consumption.valueHelpDefinition: [{entity : {name : 'ZBM_I_UOM', element: 'Msehi'  } }]
     SizeUom,
     @Semantics.amount.currencyCode: 'PriceCurrency'
     @EndUserText.label: 'Net Price'
     Price,
-    @Consumption.valueHelpDefinition: [{entity : {name : 'I_Currency', element : 'Currency'  } }]
+    @Consumption.valueHelpDefinition: [{entity : {name : 'I_Currency', element: 'Currency'  } }]
     PriceCurrency,
     @Semantics.amount.currencyCode: 'PriceCurrency'
     Taxrate,
@@ -41,6 +43,7 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     CreationTime,
     ChangedBy,
     ChangeTime,
+    ImageUrl,
     
     /* Associations */
     _Market : redirected to composition child ZBM_C_MARKET,
@@ -48,6 +51,7 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     _Currency,
     _Phase,
     _PGroup
+    
 
     
 }

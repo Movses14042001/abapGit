@@ -43,6 +43,7 @@ define root  view entity ZBM_I_PRODUCT as select from zbm_d_product as Product
     _Orrder,
     _Currency,
     _Phase,
-    _PGroup
+    _PGroup,
+    _PGroup.ImageUrl as ImageUrl
 
 }

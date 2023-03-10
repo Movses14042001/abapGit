@@ -8,6 +8,7 @@
 "ASSOCIATED":
 [
 "I_CURRENCY",
+"ZBM_I_MARKET",
 "ZBM_I_PRODUCT"
 ],
 "BASE":

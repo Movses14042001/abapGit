@@ -136,7 +136,7 @@ CLASS lhc_Product IMPLEMENTATION.
 
      Groups = CORRESPONDING #( Products DISCARDING DUPLICATES MAPPING pg_id = PgId EXCEPT * ).
     DELETE Groups WHERE pg_id IS INITIAL.
-    IF Products IS NOT INITIAL.
+    IF Groups IS NOT INITIAL.
 
       SELECT FROM zbm_d_prod_group FIELDS pg_id
         FOR ALL ENTRIES IN @Groups

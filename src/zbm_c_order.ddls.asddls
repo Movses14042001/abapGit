@@ -28,5 +28,6 @@ define view entity ZBM_C_ORDER as projection on ZBM_I_ORDER as Orrder
     
        /* Associations */
     _Product : redirected to parent ZBM_C_PRODUCT,
-    _Currency
+    _Currency,
+    _Market
 }

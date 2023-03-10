@@ -3,6 +3,7 @@
 {
 "FROM":
 [
+"ZBM_I_PROD_GROUP",
 "ZBM_D_PRODUCT"
 ],
 "ASSOCIATED":
