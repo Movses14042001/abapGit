@@ -1,22 +1,24 @@
 managed;
+with draft;
 //strict (1);
 
 define behavior for ZBM_I_PRODUCT alias Product
 implementation in class zbp_bm_i_product unique
 persistent table zbm_d_product
-lock master
+draft table zbm_d_dproduct
+lock master total etag ChangeTime
 //authorization master ( instance )
 etag master ChangeTime
 {
   create;
   update;
   delete;
-  association _Market { create; }
-  association _Orrder { create; }
+  association _Market { create; with draft; }
+  association _Orrder { create; with draft; }
 
 field ( numbering : managed, readonly ) ProdUuid;
 field ( mandatory ) ProdId, PgId, Price;
-field ( readonly ) PhaseId;
+field ( readonly ) PhaseId, ChangeTime, ChangedBy, CreatedBy, CreationTime;
 
 
 determination setFirstPhase on modify { create; }
@@ -24,7 +26,18 @@ determination setFirstPhase on modify { create; }
 validation validatePG on save { field PgId; create; }
 validation prodId on save { field ProdId; create; }
 
-action ( features : instance ) makeCopy result [1] $self;
+draft determine action Prepare {
+validation prodId;
+validation validatePG;
+//validation Market~validateMarket;
+//validation Market~valideStartDate;
+//validation Market~valideEndDate;
+//validation Market~checkDuplicates;
+validation Orrder~validateDeliveyDate;}
+
+
+
+factory action makeCopy [1] ;
 action ( features : instance ) moveToNextPhase result [1] $self;
 
   mapping for zbm_d_product
@@ -52,13 +65,14 @@ action ( features : instance ) moveToNextPhase result [1] $self;
 define behavior for ZBM_I_MARKET alias Market
 implementation in class zbp_bm_i_market unique
 persistent table zbm_d_prod_mrkt
+draft table zbm_d_dmarket
 lock dependent by _Product
 //authorization dependent by _Product
 //etag master <field_name>
 {
   update;
   delete;
-  association _Product;
+  association _Product { with draft; }
 
   field (numbering : managed, readonly ) MrktUuid ;
   field ( readonly ) ProdUuid, ChangeTime, ChangedBy, CreationTime, CreatedBy;
@@ -70,7 +84,6 @@ validation validateMarket on save { field Mrktid; create; }
 validation valideStartDate on save { field Startdate; create; }
 validation valideEndDate on save { field Enddate; create; }
 validation checkDuplicates on save { field Mrktid; create; }
-
 
 
 action ( features : instance ) confirm result [1] $self;
@@ -97,13 +110,14 @@ action ( features : instance ) confirm result [1] $self;
 define behavior for ZBM_I_ORDER alias Orrder
 implementation in class zbp_bm_i_order unique
 persistent table zbm_d_mrkt_order
+draft table zbm_d_dorder
 lock dependent by _Product
 //authorization dependent by _Product
 //etag master <field_name>
 {
   update;
   delete;
-  association _Product;
+  association _Product { with draft; }
   association _Market;
 
   field ( readonly ) ProdUuid;

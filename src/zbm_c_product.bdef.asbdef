@@ -1,5 +1,6 @@
 projection;
 //strict ( 1 );
+use draft;
 
 define behavior for ZBM_C_PRODUCT alias Product
 //use etag
@@ -8,8 +9,8 @@ define behavior for ZBM_C_PRODUCT alias Product
   use update;
   use delete;
 
-  use association _Market { create; }
-  use association _Orrder { create; }
+  use association _Market { create; with draft; }
+  use association _Orrder { create; with draft; }
 
    use action moveToNextPhase;
    use action makeCopy;
@@ -22,7 +23,9 @@ define behavior for ZBM_C_MARKET alias Market
   use update;
   use delete;
 
-  use association _Product;
+  use association _Product { with draft; }
+
+  use action confirm;
 }
 
 define behavior for ZBM_C_ORDER alias Orrder
@@ -31,5 +34,5 @@ define behavior for ZBM_C_ORDER alias Orrder
   use update;
   use delete;
 
-  use association _Product;
+  use association _Product { with draft; }
 }

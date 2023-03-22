@@ -17,12 +17,15 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PHASE', element: 'PhaseId' } }]
     @ObjectModel.text.element: ['Phase']
     @EndUserText.label: 'Phase'
+    @UI.textArrangement: #TEXT_ONLY
     PhaseId,
     _Phase.Phase,
     _Phase.phascriticality,
     @Semantics.quantity.unitOfMeasure: 'SizeUom'
     @EndUserText.label: 'Height'
     Height,
+    @EndUserText.label: 'Size Dimensions'
+    Mesurement,
     @Semantics.quantity.unitOfMeasure: 'SizeUom'
     @EndUserText.label: 'Depth'
     Depth,
@@ -39,6 +42,7 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     PriceCurrency,
     @Semantics.amount.currencyCode: 'PriceCurrency'
     Taxrate,
+    
     CreatedBy,
     CreationTime,
     ChangedBy,

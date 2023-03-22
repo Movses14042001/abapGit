@@ -27,6 +27,10 @@ define root  view entity ZBM_I_PRODUCT as select from zbm_d_product as Product
     height         as Height,
     depth          as Depth,
     width          as Width,
+    
+    concat(cast( height as abap.char( 20 ) ), concat_with_space(' X ', concat('',  
+                                              concat(cast( depth as abap.char( 20 ) ), 
+                                              concat(' X', concat_with_space('', cast( width as abap.char( 20 ) ), 1  ) ))), 1)) as Mesurement,
     size_uom       as SizeUom,
     @Semantics.amount.currencyCode : 'PriceCurrency'
     price          as Price,

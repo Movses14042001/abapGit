@@ -3,11 +3,13 @@
 {
 "FROM":
 [
+"ZBM_I_MARKET_T",
 "ZBM_D_PROD_MRKT"
 ],
 "ASSOCIATED":
 [
 "ZBM_I_MARKET_T",
+"ZBM_I_ORDER",
 "ZBM_I_PRODUCT"
 ],
 "BASE":

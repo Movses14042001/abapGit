@@ -6,9 +6,6 @@ CLASS lhc_Product DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS get_instance_features FOR INSTANCE FEATURES
       IMPORTING keys REQUEST requested_features FOR Product RESULT result.
 
-    METHODS makeCopy FOR MODIFY
-      IMPORTING keys FOR ACTION Product~makeCopy RESULT result.
-
     METHODS moveToNextPhase FOR MODIFY
       IMPORTING keys FOR ACTION Product~moveToNextPhase RESULT result.
 
@@ -21,15 +18,36 @@ CLASS lhc_Product DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS validatePG FOR VALIDATE ON SAVE
       IMPORTING keys FOR Product~validatePG.
 
+    METHODS makeCopy FOR MODIFY
+      IMPORTING keys FOR ACTION Product~makeCopy.
+
+
+
 ENDCLASS.
 
 CLASS lhc_Product IMPLEMENTATION.
 
   METHOD get_instance_features.
+
+   READ ENTITIES OF zbm_i_product IN LOCAL MODE
+      ENTITY Product
+        FIELDS ( PhaseId ) WITH CORRESPONDING #( keys )
+      RESULT DATA(Phases)
+      FAILED failed.
+
+    result =
+      VALUE #(
+        FOR Phase IN Phases
+          LET set_phase =   COND #( WHEN Phase-PhaseId = 4
+                                      THEN if_abap_behv=>fc-o-disabled
+                                      ELSE if_abap_behv=>fc-o-enabled
+                                        )
+
+          IN
+            ( %tky                = Phase-%tky
+              %action-moveToNextPhase = set_phase ) ).
   ENDMETHOD.
 
-  METHOD makeCopy.
-  ENDMETHOD.
 
   METHOD moveToNextPhase.
 
@@ -37,6 +55,8 @@ CLASS lhc_Product IMPLEMENTATION.
          ENTITY Product
             FIELDS ( PhaseId ) WITH CORRESPONDING #( keys )
          RESULT DATA(Phases).
+
+
 
    MODIFY ENTITIES OF zbm_i_product IN LOCAL MODE
     ENTITY Product
@@ -164,6 +184,48 @@ CLASS lhc_Product IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
+
+  ENDMETHOD.
+
+  METHOD makeCopy.
+
+  DATA:
+
+
+      Products  TYPE TABLE FOR CREATE zbm_i_product\\Product.
+
+   " remove travel instances with initial %cid (i.e., not set by caller API)
+   READ TABLE keys WITH KEY %cid = '' INTO DATA(key_with_inital_cid).
+   ASSERT key_with_inital_cid IS INITIAL.
+
+   " read the data from the travel instances to be copied
+   READ ENTITIES OF zbm_i_product IN LOCAL MODE
+      ENTITY Product
+      ALL FIELDS WITH CORRESPONDING #( keys )
+   RESULT DATA(product_read_result)
+   FAILED failed.
+
+   LOOP AT product_read_result ASSIGNING FIELD-SYMBOL(<product>).
+      " fill in travel container for creating new travel instance
+      APPEND VALUE #( %cid      = keys[ KEY entity %key = <product>-%key ]-%cid
+                     %data     = CORRESPONDING #( <product> EXCEPT ProdId )
+                  )
+      TO Products ASSIGNING FIELD-SYMBOL(<new_product>).
+
+      <new_product>-PhaseId  = 1.
+
+   ENDLOOP.
+
+   " create new BO instance
+   MODIFY ENTITIES OF zbm_i_product IN LOCAL MODE
+      ENTITY Product
+      CREATE FIELDS ( PgId PhaseId Depth Height ImageUrl Price
+                      PriceCurrency ProdId  SizeUom Taxrate Width )
+         WITH Products
+      MAPPED DATA(mapped_create).
+
+   " set the new BO instances
+   mapped-product   =  mapped_create-Product .
 
   ENDMETHOD.
 
