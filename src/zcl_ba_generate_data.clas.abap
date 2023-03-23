@@ -68,27 +68,27 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
     out->write( sy-dbcnt ).
     out->write( 'phases data inserted successfully!').
 
-*** MARKETS
+** MARKETS
 *   fill internal table (itab)
     lt_markets = VALUE #(
-        ( mrktid  = '1'  mrktname = 'Russia'          code = 'RU' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54940426/russia-flag-image-free-download.jpg' )
-        ( mrktid  = '2'  mrktname = 'Belarus'         code = 'RU' imageurl = 'https://cdn.countryflags.com/thumbs/belarus/flag-400.png' )
-        ( mrktid  = '3'  mrktname = 'United Kingdom'  code = 'EN' imageurl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/640px-Flag_of_the_United_Kingdom.svg.png' )
-        ( mrktid  = '4'  mrktname = 'France'          code = 'FR' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54002660/france-flag-image-free-download.jpg' )
-        ( mrktid  = '5'  mrktname = 'Germany'         code = 'DE' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54006402/germany-flag-image-free-download.jpg' )
-        ( mrktid  = '6'  mrktname = 'Italy'           code = 'IT' imageurl = 'https://cdn.countryflags.com/thumbs/italy/flag-400.png' )
-        ( mrktid  = '7'  mrktname = 'USA'             code = 'EN' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54958906/the-united-states-flag-image-free-download.jpg' )
-        ( mrktid  = '8'  mrktname = 'Japan'           code = 'EN' imageurl = 'https://image.freepik.com/free-vector/illustration-japan-flag_53876-27128.jpg' )
-        ( mrktid  = '9'  mrktname = 'Poland'          code = 'EN' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54940016/poland-flag-image-free-download.jpg' )
-        ( mrktid  = '10' mrktname = 'Spain'           code = 'ES' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54940016/poland-flag-image-free-download.jpg' )
+        ( mrkt_id  = '1'  mrkt_name = 'Russia'          code = 'RU' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54940426/russia-flag-image-free-download.jpg' )
+        ( mrkt_id  = '2'  mrkt_name = 'Belarus'         code = 'RU' imageurl = 'https://cdn.countryflags.com/thumbs/belarus/flag-400.png' )
+        ( mrkt_id  = '3'  mrkt_name = 'United Kingdom'  code = 'EN' imageurl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/640px-Flag_of_the_United_Kingdom.svg.png' )
+        ( mrkt_id  = '4'  mrkt_name = 'France'          code = 'FR' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54002660/france-flag-image-free-download.jpg' )
+        ( mrkt_id  = '5'  mrkt_name = 'Germany'         code = 'DE' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54006402/germany-flag-image-free-download.jpg' )
+        ( mrkt_id  = '6'  mrkt_name = 'Italy'           code = 'IT' imageurl = 'https://cdn.countryflags.com/thumbs/italy/flag-400.png' )
+        ( mrkt_id  = '7'  mrkt_name = 'USA'             code = 'EN' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54958906/the-united-states-flag-image-free-download.jpg' )
+        ( mrkt_id  = '8'  mrkt_name = 'Japan'           code = 'EN' imageurl = 'https://image.freepik.com/free-vector/illustration-japan-flag_53876-27128.jpg' )
+        ( mrkt_id  = '9'  mrkt_name = 'Poland'          code = 'EN' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54940016/poland-flag-image-free-download.jpg' )
+        ( mrkt_id  = '10' mrkt_name = 'Spain'           code = 'ES' imageurl = 'https://cdn.webshopapp.com/shops/94414/files/54940016/poland-flag-image-free-download.jpg' )
      ).
 
 *   Delete the possible entries in the database table - in case it was already filled
     DELETE FROM zbm_d_market.
 *   insert the new table entries
-    INSERT zbm_d_market FROM TABLE @lt_markets.
-
-*   check the result
+   INSERT zbm_d_market FROM TABLE @lt_markets.
+*
+**   check the result
     SELECT * FROM zbm_d_market INTO TABLE @lt_markets.
     out->write( sy-dbcnt ).
     out->write( 'markets data inserted successfully!').

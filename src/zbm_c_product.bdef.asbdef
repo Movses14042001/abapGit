@@ -23,7 +23,7 @@ define behavior for ZBM_C_MARKET alias Market
   use update;
   use delete;
 
-  use association _Product { with draft; }
+  use association _Product  { with draft; }
 
   use action confirm;
 }

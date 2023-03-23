@@ -29,10 +29,10 @@ validation prodId on save { field ProdId; create; }
 draft determine action Prepare {
 validation prodId;
 validation validatePG;
-//validation Market~validateMarket;
-//validation Market~valideStartDate;
-//validation Market~valideEndDate;
-//validation Market~checkDuplicates;
+validation Market~validateMarket;
+validation Market~valideStartDate;
+validation Market~valideEndDate;
+validation Market~checkDuplicates;
 validation Orrder~validateDeliveyDate;}
 
 
@@ -121,7 +121,10 @@ lock dependent by _Product
   association _Market;
 
   field ( readonly ) ProdUuid;
-  field ( numbering : managed, readonly ) MrktUuid, OrderUuid;
+  field ( numbering : managed, readonly )  OrderUuid;
+  field ( readonly )  ChangeTime, ChangedBy, CreationTime, CreatedBy;
+  field ( mandatory ) Quantity, DeliveryDate;
+
 
 
 

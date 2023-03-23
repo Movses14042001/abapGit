@@ -3,7 +3,7 @@ define service ZBM_UI_PRODUCT {
   expose ZBM_C_PRODUCT as Product;
   expose ZBM_C_ORDER as Orrder;
   expose ZBM_C_MARKET as Market;
-  expose ZBM_I_MARKET_T as MarketT;
+  expose ZBM_I_MARKET_T as Market_t;
   expose ZBM_I_PHASE as Phase;
   expose ZBM_I_UOM as Ucom;
   expose I_Currency as Currency;

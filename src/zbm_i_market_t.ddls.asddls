@@ -8,8 +8,8 @@
     dataClass: #MIXED
 }
 define view entity ZBM_I_MARKET_T as select from zbm_d_market as MarketT {
-    key mrktid as Mrktid,
-    mrktname as Mrktname,
+    key mrkt_id as Mrktid,
+    mrkt_name as Mrktname,
     code as Code,
     imageurl as Imageurl
-}
+    }

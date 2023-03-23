@@ -10,7 +10,8 @@ define view entity ZBM_C_MARKET as projection on ZBM_I_MARKET as Market
     @Search.defaultSearchElement: true
     @ObjectModel.text.element: ['Country']
     @EndUserText.label: 'Market'
-    @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_MARKET_T' , element : 'Mrktid' } }]
+   @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_MARKET_T' , element : 'Mrktid' } }]
+    @UI.textArrangement: #TEXT_ONLY
     MrktId,
     _Market_t.Mrktname as  Country,
     @Search.defaultSearchElement: true
