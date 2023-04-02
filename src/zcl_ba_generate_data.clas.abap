@@ -22,7 +22,8 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
           lt_phases    TYPE TABLE OF zbm_d_phase,
           lt_markets   TYPE TABLE OF zbm_d_market,
           lt_marketsd  TYPE TABLE OF zbm_d_prod_mrkt,
-          lt_uom       TYPE TABLE OF zbm_d_uom.
+          lt_uom       TYPE TABLE OF zbm_d_uom,
+          it_ord       TYPE TABLE OF zbm_d_mrkt_order.
 
 *** PRODUCT GROUPS
 **   fill internal table (itab)
@@ -117,13 +118,16 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
     lt_prod = VALUE #( ( width = '11' depth = '11' height = '11' pg_id = '1' phase_id = '1' prod_id = '1' prod_uuid = 'C6EF623455A21EDDAF833300F97C672C' ) ).
 
 
-
+    it_ord  =  VALUE #( ( orderid = 1  mrkt_uuid = '72AD846C0C401EEDAF844F5302769A58'  order_uuid = '72AD846C0C401EEDAF844F5302769qeq' prod_uuid =  'C6EF623455A21EDDAF833300F97C672C' amountcurr = 'USD' ) ).
 
     DELETE FROM zbm_d_product.
+    DELETE FROM zbm_d_mrkt_order.
     DELETE FROM zbm_d_dproduct.
     DELETE FROM zbm_d_dmarket.
 *   insert the new table entries
-    INSERT zbm_d_product FROM TABLE @lt_prod.
+  .  INSERT zbm_d_product FROM TABLE @lt_prod.
+
+     INSERT zbm_d_mrkt_order FROM TABLE @it_ord.
 
 
 

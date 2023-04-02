@@ -42,10 +42,15 @@ CLASS lhc_Market IMPLEMENTATION.
                             THEN if_abap_behv=>fc-o-disabled
                              ELSE if_abap_behv=>fc-o-enabled )
 
+      Ord_create = COND #( WHEN status-Status = conf_data-confirmed
+                            THEN if_abap_behv=>fc-o-enabled
+                            ELSE if_abap_behv=>fc-o-disabled )
 
     IN
             ( %tky                = status-%tky
-              %action-confirm = Stat_Conf ) ).
+              %action-confirm = Stat_Conf
+              %assoc-_Orrder = Ord_create
+               ) ).
 
   ENDMETHOD.
 
@@ -77,27 +82,28 @@ CLASS lhc_Market IMPLEMENTATION.
 
     READ ENTITIES OF zbm_i_product IN LOCAL MODE
         ENTITY Market
-          FIELDS ( MrktId ) WITH CORRESPONDING #( keys )
+          FIELDS ( ProdUuid MrktId ) WITH CORRESPONDING #( keys )
         RESULT DATA(Markets).
 
     DATA ProdMarkt TYPE SORTED TABLE OF zbm_d_prod_mrkt WITH UNIQUE KEY mrkt_id.
 
 
      ProdMarkt = CORRESPONDING #( Markets DISCARDING DUPLICATES MAPPING mrkt_id = MrktId  EXCEPT * ).
-    DELETE Markets WHERE MrktId IS INITIAL.
+    DELETE ProdMarkt WHERE mrkt_id IS INITIAL.
+
     IF Markets IS NOT INITIAL.
 
       SELECT FROM zbm_d_prod_mrkt FIELDS mrkt_id
         FOR ALL ENTRIES IN @prodmarkt
-        WHERE mrkt_id = @ProdMarkt-mrkt_id AND prod_uuid = @ProdMarkt-prod_uuid
+        WHERE mrkt_id = @ProdMarkt-mrkt_id
         INTO TABLE @DATA(Marktdb).
   ENDIF.
 
     LOOP AT Markets INTO DATA(Markt).
 
-      APPEND VALUE #(  %tky        = Markt-%tky
-                       %state_area = 'Duplicates' )
-        TO reported-Product.
+    APPEND VALUE #(  %tky        = Markt-%tky
+                     %state_area = 'DUPLICATES')
+                       TO reported-Market.
 
       IF Markt-MrktId IS INITIAL OR line_exists( Marktdb[ mrkt_id = Markt-MrktId ] ).
        APPEND VALUE #(  %tky = Markt-%tky )
@@ -105,7 +111,7 @@ CLASS lhc_Market IMPLEMENTATION.
 
 
         APPEND VALUE #(  %tky        = Markt-%tky
-                         %state_area = 'Duplicates'
+                         %state_area = 'DUPLICATES'
                          %msg        = NEW ZCM_RAP_BM(
                                            severity   = if_abap_behv_message=>severity-error
                                            textid     = ZCM_RAP_BM=>assigned_market
@@ -121,51 +127,43 @@ CLASS lhc_Market IMPLEMENTATION.
 
   METHOD validateMarket.
 
-
-
-    READ ENTITIES OF zbm_i_product IN LOCAL MODE
-       ENTITY Market
-         FIELDS ( Mrktid ) WITH CORRESPONDING #( keys )
-       RESULT DATA(Markets).
-
+ READ ENTITIES OF zbm_i_product IN LOCAL MODE
+        ENTITY Market
+          FIELDS ( MrktId ) WITH CORRESPONDING #( keys )
+        RESULT DATA(Markets).
 
     DATA Marknames TYPE SORTED TABLE OF zbm_d_market WITH UNIQUE KEY mrkt_id.
 
 
-
-    Marknames = CORRESPONDING #( Markets DISCARDING DUPLICATES MAPPING mrkt_id = MrktId EXCEPT * ).
+     Marknames = CORRESPONDING #( Markets DISCARDING DUPLICATES MAPPING mrkt_id = MrktId  EXCEPT * ).
     DELETE Marknames WHERE mrkt_id IS INITIAL.
-
-    IF Marknames IS NOT INITIAL.
+    IF Markets IS NOT INITIAL.
 
       SELECT FROM zbm_d_market FIELDS mrkt_id
-       FOR ALL ENTRIES IN @Marknames
-       WHERE mrkt_id = @Marknames-mrkt_id
-       INTO TABLE @DATA(NamesDB).
-
-    ENDIF.
+        FOR ALL ENTRIES IN @Marknames
+        WHERE mrkt_id = @Marknames-mrkt_id
+        INTO TABLE @DATA(mark_db).
+  ENDIF.
 
     LOOP AT Markets INTO DATA(Market).
 
-
       APPEND VALUE #(  %tky        = Market-%tky
-                       %state_area = 'VALIDATE_MARKET')
-                       TO reported-Market.
+                       %state_area = 'VALIDATE_MARKET' )
+        TO reported-Market.
 
-      IF Market-Mrktid IS INITIAL OR NOT line_exists( NamesDB[ mrkt_id = Market-MrktId ] ).
-        APPEND VALUE #( %tky = Market-%tky ) TO failed-Market.
+      IF Market-MrktId IS INITIAL OR NOT line_exists( mark_db[ mrkt_id = Market-MrktId ] ).
+       APPEND VALUE #(  %tky = Market-%tky )
+           TO failed-Market.
 
-        APPEND VALUE #(  %tky = Market-%tky
-                         %state_area     = 'VALIDATE_MARKET'
-                         %msg            = NEW zcm_rap_bm(
-                           severity = if_abap_behv_message=>severity-error
-                           textid   = zcm_rap_bm=>market_unknown
-                           Marketid  = Market-Mrktid )
+
+        APPEND VALUE #(  %tky        = Market-%tky
+                         %state_area = 'VALIDATE_MARKET'
+                         %msg        = NEW ZCM_RAP_BM(
+                                           severity   = if_abap_behv_message=>severity-error
+                                           textid     = ZCM_RAP_BM=>market_unknown
+                                           marketid     = Market-MrktId )
                          %element-MrktId = if_abap_behv=>mk-on )
-                         TO reported-Market.
-
-
-
+          TO reported-Market.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.

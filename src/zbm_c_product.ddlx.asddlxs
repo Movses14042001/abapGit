@@ -153,6 +153,7 @@ annotate view ZBM_C_PRODUCT with
   @UI:{
       identification: [{position: 20 }],
       selectionField: [{position: 30}] } 
+  @UI.textArrangement: #TEXT_ONLY
   PgId; 
   
 

@@ -1,6 +1,11 @@
 CLASS lhc_Product DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
 
+   CONSTANTS:
+      BEGIN OF Conf_data,
+        Confirmed  TYPE c LENGTH 1 VALUE 'X',
+      END OF Conf_data.
+
 
 
     METHODS get_instance_features FOR INSTANCE FEATURES
@@ -43,9 +48,14 @@ CLASS lhc_Product IMPLEMENTATION.
                                       ELSE if_abap_behv=>fc-o-enabled
                                         )
 
+
+
           IN
             ( %tky                = Phase-%tky
-              %action-moveToNextPhase = set_phase ) ).
+              %action-moveToNextPhase = set_phase
+
+               ) ).
+
   ENDMETHOD.
 
 
@@ -208,6 +218,7 @@ CLASS lhc_Product IMPLEMENTATION.
    LOOP AT product_read_result ASSIGNING FIELD-SYMBOL(<product>).
       " fill in travel container for creating new travel instance
       APPEND VALUE #( %cid      = keys[ KEY entity %key = <product>-%key ]-%cid
+                     %is_draft = keys[ KEY entity %key = <product>-%key ]-%param-%is_draft
                      %data     = CORRESPONDING #( <product> EXCEPT ProdId )
                   )
       TO Products ASSIGNING FIELD-SYMBOL(<new_product>).

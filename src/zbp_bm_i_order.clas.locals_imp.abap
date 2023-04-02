@@ -18,9 +18,55 @@ ENDCLASS.
 CLASS lhc_Orrder IMPLEMENTATION.
 
   METHOD calculateAmount.
+
+  DATA Amount TYPE zbam1_netamount.
+
+   READ ENTITIES OF zbm_i_product IN LOCAL MODE
+    ENTITY Orrder
+   FIELDS ( Netamount Grossamount ) WITH CORRESPONDING #( keys )
+   RESULT DATA(Orders).
+
+   LOOP AT Orders INTO DATA(order).
+    Amount = order-Netamount + order-Grossamount.
+   ENDLOOP.
+
+
   ENDMETHOD.
 
   METHOD calculateOrderId.
+
+   DATA max_orderid TYPE zbam_order_id.
+   DATA new_order TYPE TABLE FOR UPDATE zbm_i_product\\Orrder.
+
+   READ ENTITIES OF zbm_i_product IN LOCAL MODE
+    ENTITY  Market BY \_Orrder
+   FIELDS ( Orderid ) WITH CORRESPONDING #( keys )
+   RESULT DATA(Orders).
+
+   Max_orderid = '00000'.
+   LOOP AT Orders INTO DATA(Order).
+    IF Order-Orderid > max_orderid.
+       max_orderid   = Order-OrderId.
+    ENDIF.
+   ENDLOOP.
+
+
+     LOOP AT Orders INTO Order WHERE Orderid IS INITIAL.
+          Max_orderid += 1.
+        APPEND VALUE #( %tky = Order-%tky
+                        OrderId  = max_orderid ) TO new_order.
+     ENDLOOP.
+
+     MODIFY ENTITIES OF zbm_i_product IN LOCAL MODE
+     ENTITY Orrder
+       UPDATE FIELDS ( Orderid ) WITH new_order
+       REPORTED DATA(update_reported).
+
+
+    reported = CORRESPONDING #( DEEP update_reported ).
+
+
+
   ENDMETHOD.
 
   METHOD setCalendarYear.

@@ -6,7 +6,8 @@ define behavior for ZBM_I_PRODUCT alias Product
 implementation in class zbp_bm_i_product unique
 persistent table zbm_d_product
 draft table zbm_d_dproduct
-lock master total etag ChangeTime
+lock master
+total etag ChangeTime
 //authorization master ( instance )
 etag master ChangeTime
 {
@@ -14,51 +15,54 @@ etag master ChangeTime
   update;
   delete;
   association _Market { create; with draft; }
-  association _Orrder { create; with draft; }
-
-field ( numbering : managed, readonly ) ProdUuid;
-field ( mandatory ) ProdId, PgId, Price;
-field ( readonly ) PhaseId, ChangeTime, ChangedBy, CreatedBy, CreationTime;
-
-
-determination setFirstPhase on modify { create; }
-
-validation validatePG on save { field PgId; create; }
-validation prodId on save { field ProdId; create; }
-
-draft determine action Prepare {
-validation prodId;
-validation validatePG;
-validation Market~validateMarket;
-validation Market~valideStartDate;
-validation Market~valideEndDate;
-validation Market~checkDuplicates;
-validation Orrder~validateDeliveyDate;}
 
 
 
-factory action makeCopy [1] ;
-action ( features : instance ) moveToNextPhase result [1] $self;
+  field ( numbering : managed, readonly ) ProdUuid;
+  field ( mandatory ) ProdId, PgId, Price;
+  field ( readonly ) PhaseId, ChangeTime, ChangedBy, CreatedBy, CreationTime;
 
-  mapping for zbm_d_product
+
+  determination setFirstPhase on modify { create; }
+
+  validation validatePG on save { field PgId; create; }
+  validation prodId on save { field ProdId; create; }
+
+  draft determine action Prepare
   {
-
-    ProdUuid      = prod_uuid;
-    ProdId        = prod_id;
-    PgId          = pg_id;
-    PhaseId       = phase_id;
-    Height        = height;
-    Depth         = depth;
-    Width         = width;
-    SizeUom       = size_uom;
-    Price         = price;
-    PriceCurrency = price_currency;
-    taxrate       = Taxrate;
-    CreatedBy     = created_by;
-    CreationTime  = creation_time;
-    ChangedBy     =  changed_by;
-    ChangeTime    =  Change_time;
+    validation prodId;
+    validation validatePG;
+    validation Market~validateMarket;
+    validation Market~valideStartDate;
+    validation Market~valideEndDate;
+    validation Market~checkDuplicates;
+    validation Orrder~validateDeliveyDate;
   }
+
+
+
+  factory action makeCopy parameter ZBM_ABC_PRODUCT [1];
+  action ( features : instance ) moveToNextPhase result [1] $self;
+  mapping for zbm_d_product
+    {
+      ProdUuid      = prod_uuid;
+      ProdId        = prod_id;
+      PgId          = pg_id;
+      PhaseId       = phase_id;
+      Height        = height;
+      Depth         = depth;
+      Width         = width;
+      SizeUom       = size_uom;
+      Price         = price;
+      PriceCurrency = price_currency;
+      taxrate       = Taxrate;
+      CreatedBy     = created_by;
+      CreationTime  = creation_time;
+      ChangedBy     = changed_by;
+      ChangeTime    = Change_time;
+    }
+
+
 
 }
 
@@ -68,44 +72,44 @@ persistent table zbm_d_prod_mrkt
 draft table zbm_d_dmarket
 lock dependent by _Product
 //authorization dependent by _Product
-//etag master <field_name>
+etag master ChangeTime
 {
   update;
   delete;
-  association _Product { with draft; }
+  association _Product { with draft;}
+  association _Orrder { create ( features : instance ); with draft; }
 
-  field (numbering : managed, readonly ) MrktUuid ;
+  field ( numbering : managed, readonly ) MrktUuid;
   field ( readonly ) ProdUuid, ChangeTime, ChangedBy, CreationTime, CreatedBy;
   field ( mandatory ) Mrktid, Startdate;
   field ( readonly ) Status;
 
 
-validation validateMarket on save { field Mrktid; create; }
-validation valideStartDate on save { field Startdate; create; }
-validation valideEndDate on save { field Enddate; create; }
-validation checkDuplicates on save { field Mrktid; create; }
+  validation validateMarket on save { field Mrktid; create; }
+  validation valideStartDate on save { field Startdate; create; }
+  validation valideEndDate on save { field Enddate; create; }
+  validation checkDuplicates on save { field Mrktid; create; }
 
 
-action ( features : instance ) confirm result [1] $self;
-
-
+  action ( features : instance ) confirm result [1] $self;
   mapping for zbm_d_prod_mrkt
-  {
+    {
+      ProdUuid     = prod_uuid;
+      MrktUuid     = mrkt_uuid;
+      MrktId       = mrkt_id;
+      Status       = status;
+      Startdate    = startdate;
+      Enddate      = enddate;
+      CreatedBy    = created_by;
+      CreationTime = creation_time;
+      ChangedBy    = changed_by;
+      ChangeTime   = change_time;
+    }
 
-    ProdUuid     = prod_uuid ;
-    MrktUuid     = mrkt_uuid;
 
-    Status       = status;
-    Startdate    = startdate;
-    Enddate      = enddate;
-    CreatedBy    = created_by;
-    CreationTime = creation_time;
-    ChangedBy    = changed_by;
-    ChangeTime   = change_time;
-  }
+
 
 }
-
 
 define behavior for ZBM_I_ORDER alias Orrder
 implementation in class zbp_bm_i_order unique
@@ -113,45 +117,44 @@ persistent table zbm_d_mrkt_order
 draft table zbm_d_dorder
 lock dependent by _Product
 //authorization dependent by _Product
-//etag master <field_name>
+etag master ChangeTime
 {
   update;
   delete;
-  association _Product { with draft; }
-  association _Market;
+  association _Product {with draft;}
 
-  field ( readonly ) ProdUuid;
-  field ( numbering : managed, readonly )  OrderUuid;
-  field ( readonly )  ChangeTime, ChangedBy, CreationTime, CreatedBy;
+  field ( readonly ) ProdUuid, MrktUuid;
+  field ( numbering : managed, readonly ) OrderUuid;
+  field ( readonly ) ChangeTime, ChangedBy, CreationTime, CreatedBy;
   field ( mandatory ) Quantity, DeliveryDate;
 
 
 
 
-determination calculateOrderId on modify { create; }
-determination setCalendarYear on modify { create; }
-determination calculateAmount on modify { create; }
+  determination calculateOrderId on modify { create; }
+  determination setCalendarYear on modify { create; }
+  determination calculateAmount on modify { create; }
 
 
-validation validateDeliveyDate on save { field DeliveryDate; create; }
-
+  validation validateDeliveyDate on save { field DeliveryDate; create; }
   mapping for zbm_d_mrkt_order
-  {
+    {
+      ProdUuid     = prod_uuid;
+      MrktUuid     = mrkt_uuid;
+      OrderUuid    = order_uuid;
+      Orderid      = orderid;
+      Quantity     = quantity;
+      DeliveryDate = delivery_date;
+      Netamount    = netamount;
+      Grossamount  = grossamount;
+      Amountcurr   = amountcurr;
+      CreatedBy    = created_by;
+      CreationTime = creation_time;
+      ChangedBy    = changed_by;
+      ChangeTime   = change_time;
+    }
 
-    ProdUuid     = prod_uuid;
-    MrktUuid     = mrkt_uuid;
-    OrderUuid    = order_uuid;
-    Orderid      = orderid;
-    Quantity     = quantity;
-    DeliveryDate = delivery_date;
-    Netamount    = netamount;
-    Grossamount  = grossamount;
-    Amountcurr   = amountcurr;
-    CreatedBy    = created_by;
-    CreationTime = creation_time;
-    ChangedBy    = changed_by;
-    ChangeTime   = change_time;
 
-   }
+
 
 }

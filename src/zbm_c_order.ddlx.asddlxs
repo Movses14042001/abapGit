@@ -1,43 +1,162 @@
 @Metadata.layer: #CORE
+@UI:{
+    headerInfo : { typeName : 'Order',
+    typeNamePlural : 'Orders',
+    typeImageUrl:  'https://i7.pngguru.com/preview/423/632/57/computer-icons-purchase-order-order-fulfillment-purchasing-order-icon.jpg',
+    title: { type: #STANDARD}}}
+ 
 annotate view ZBM_C_ORDER
     with 
 {
-   @UI:{ identification : [{ position: 10, label: 'UUID' }]}
+
+@UI.facet: [ {  id: 'gros',
+               purpose: #STANDARD,
+               position: 10,
+                type: #DATAPOINT_REFERENCE,
+               label: 'Gross Amount',
+               targetQualifier: 'Grossamount'
+                },     
+              {
+              
+               id: 'net',
+                 purpose: #STANDARD,
+               position: 20,
+               type: #DATAPOINT_REFERENCE,
+               label: 'Net Amounnt',
+               targetQualifier: 'Netamount' 
+                },
+               
+               { 
+               
+               id: 'Sdat',
+                 purpose: #STANDARD,
+               position: 30,
+               type: #DATAPOINT_REFERENCE,
+               label: 'Start Date',
+               targetQualifier: 'Orderid' },
+               
+
+
+         {
+          id: 'General',
+          purpose: #STANDARD,
+          type: #COLLECTION,
+          label: 'General Information',
+          position: 10
+          },
+          
+        
+          
+           /* Collction Facets Admin*/
+          {
+          id: 'Admin',
+          purpose: #STANDARD,
+          type: #COLLECTION,
+          label: 'Admin Data',
+          position: 20 
+          },
+             
+                /* Standart Facets*/
+          /* Identification References Basic*/
+          {
+           id: 'Basic',
+          purpose: #STANDARD,
+          type: #IDENTIFICATION_REFERENCE,
+          parentId: 'General',
+          label: 'Basic Data',
+          position: 10,
+          targetQualifier: 'BasicData'
+          },
+          
+            
+                /* Standart Facets*/
+          /* Identification References Admin*/
+          { 
+          id: 'Adminid',
+          purpose: #STANDARD,
+          type: #IDENTIFICATION_REFERENCE,
+          parentId: 'Admin',
+          label: 'Admin Data',
+          targetQualifier: 'Admin',
+          position: 20
+          },
+              /* Standart Facets*/
+          /* Field Groups General*/
+          {   
+          id: 'deldate',
+          parentId: 'General',
+          position: 20,    
+          purpose:  #STANDARD,
+          type: #FIELDGROUP_REFERENCE,
+          targetQualifier: 'deldate' 
+          },
+ 
+     
+          
+       
+           /* Standart Facets*/
+           /* Field Groups Admin*/
+           
+           {  
+           parentId: 'Admin',
+           purpose:  #STANDARD,
+           position: 20,
+           type: #FIELDGROUP_REFERENCE,
+           targetQualifier: 'Time' },
+           
+           { 
+           parentId: 'Admin',
+           purpose:  #STANDARD,
+           position: 30,
+           type: #FIELDGROUP_REFERENCE,
+           label: 'Change Info',
+           targetQualifier: 'Info' 
+           }]
+           
+   @UI.hidden: true
    ProdUuid;
-   @UI:{ identification : [{ position: 20 }],
-         lineItem       : [{ position : 20 }]}
+    @UI.hidden: true
    MrktUuid;
-   @UI:{ identification : [{ position: 20 }],
-         lineItem       : [{ position : 20 }]}
+   @UI.hidden: true
    OrderUuid;
-   @UI:{ identification : [{ position: 20 }],
-         lineItem       : [{ position : 20 }]}
+   
+   
+   @UI:{ lineItem       : [{ position : 10 }]}
+   @UI:{identification : [{ qualifier: 'BasicData', position: 10}]}
    Orderid;
-   @UI:{ identification : [{ position: 20 }],
-         lineItem       : [{ position : 20 }]}
-   Quantity;
-   @UI:{ identification : [{ position: 20 }],
-         lineItem       : [{ position : 20 }]}
+   
+   @UI:{lineItem       : [{ position : 20 }]}
+   @UI:{identification : [{ qualifier: 'BasicData', position: 20}]}
    CalendarYear;
-   @UI:{ identification : [{ position: 20 }],
-         lineItem       : [{ position : 20 }]}
+   
+   
+   @UI:{ lineItem       : [{ position : 30 }]}
+   @UI.fieldGroup: [{ qualifier: 'deldate', position: 10}]
    DeliveryDate;
-   @UI:{ identification : [{ position: 20 }],
-         lineItem       : [{ position : 20 }]}
+   
+   @UI:{lineItem       : [{ position : 40 }]}
+   @UI.fieldGroup: [{ qualifier: 'deldate', position: 20}]
+   Quantity;
+   
+   @UI:{lineItem       : [{ position : 50 }]}
    Netamount;
-   @UI:{ identification : [{ position: 20 }],
-         lineItem       : [{ position : 20 }]}
+   
+   @UI:{ lineItem       : [{ position : 60 }]}
    Grossamount;
-   @UI:{ identification : [{ position: 20 }],
-         lineItem       : [{ position : 20 }]}
+   
+   @UI.hidden: true
    Amountcurr;
-   @UI.hidden: true
-   CreatedBy;
-   @UI.hidden: true
-   CreationTime;
-   @UI.hidden: true
-   ChangedBy;
-   @UI.hidden: true
-   ChangeTime;
+   
+  @UI.identification: [{ qualifier: 'Admin', position: 10 }]
+  CreatedBy;
+  
+  @UI.fieldGroup: [{ qualifier: 'Time', position: 10, label: 'Create Time'}]
+  CreationTime;
+  
+  @UI.fieldGroup: [{ qualifier: 'Info', position: 10}]
+  ChangedBy;
+  
+  @UI.fieldGroup: [{ qualifier: 'Info', position: 20}]
+  ChangeTime;
  
 }

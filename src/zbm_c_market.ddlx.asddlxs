@@ -130,10 +130,10 @@ annotate view ZBM_C_MARKET with
             /* Standart Facets*/
            /* LineItem References */
            
-           {id: 'Order',
+           {id: 'Orders',
            label: 'Orders',
            purpose:  #STANDARD,
-           position: 30,
+           position: 40,
            type: #LINEITEM_REFERENCE,
            targetElement: '_Orrder'
            }]
@@ -145,8 +145,10 @@ annotate view ZBM_C_MARKET with
   @UI.hidden: true
   MrktUuid;
  
-  @UI:{lineItem       : [{ position : 10 }],
+  @UI:{lineItem       : [{ position : 10}],
        identification : [{ qualifier: 'BasicData', position: 10 }]}
+  @UI.selectionField: [{ position: 10 }]
+  @UI.textArrangement: #TEXT_ONLY
   MrktId;
   
   @UI:{lineItem       : [{ position : 20, criticality: 'StatCriticality'},
@@ -157,6 +159,7 @@ annotate view ZBM_C_MARKET with
                        
                        fieldGroup: [{ qualifier: 'Conf', position: 10, criticality: 'StatCriticality'},
                        { type: #FOR_ACTION, dataAction: 'confirm',   label: 'Confirm', position : 10}]}
+  @UI.selectionField: [{ position: 20 }]
   Status;
   
   @UI:{ identification : [{ position: 20 }],

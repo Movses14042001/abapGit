@@ -12,6 +12,7 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     @EndUserText.label: 'Product Group'
     @ObjectModel.text.element: ['Pgname']
     @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PROD_GROUP', element: 'PgId' } }]
+//   @UI.textArrangement: #TEXT_ONLY
     PgId,
     _PGroup.PgName,
     @Consumption.valueHelpDefinition: [{entity : { name : 'ZBM_I_PHASE', element: 'PhaseId' } }]
@@ -51,7 +52,6 @@ define root view entity ZBM_C_PRODUCT as projection on ZBM_I_PRODUCT as Product
     
     /* Associations */
     _Market : redirected to composition child ZBM_C_MARKET,
-    _Orrder : redirected to composition child ZBM_C_ORDER,
     _Currency,
     _Phase,
     _PGroup
