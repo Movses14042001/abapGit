@@ -62,6 +62,27 @@ annotate view ZBM_C_MARKET with
           label: 'Admin Data',
           position: 20 
           },
+          
+          /* Chart Facets */
+          
+            { id: 'Chart_1',
+                label: 'Order Quantity',
+                position: 50,
+                purpose: #STANDARD,
+                targetElement: '_Orrder',
+                targetQualifier: 'Chart1',
+                type: #CHART_REFERENCE
+              },
+              
+              
+               { id: 'Chart_2',
+                label: 'Order Amount',
+                position: 60,
+                purpose: #STANDARD,
+                targetQualifier: 'Chart2',
+                targetElement: '_Orrder',
+                type: #CHART_REFERENCE
+              },
              
                 /* Standart Facets*/
           /* Identification References Basic*/
@@ -136,7 +157,8 @@ annotate view ZBM_C_MARKET with
            position: 40,
            type: #LINEITEM_REFERENCE,
            targetElement: '_Orrder'
-           }]
+           }
+           ]
        
 
   @UI.hidden: true

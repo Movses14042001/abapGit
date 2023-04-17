@@ -133,7 +133,7 @@ etag master ChangeTime
 
   determination calculateOrderId on modify { create; }
   determination setCalendarYear on modify { create; }
-  determination calculateAmount on modify { create; }
+  determination calculateAmount on save { create; }
 
 
   validation validateDeliveyDate on save { field DeliveryDate; create; }
@@ -149,6 +149,7 @@ etag master ChangeTime
       Grossamount  = grossamount;
       Amountcurr   = amountcurr;
       CreatedBy    = created_by;
+      CalendarYear = calendar_year;
       CreationTime = creation_time;
       ChangedBy    = changed_by;
       ChangeTime   = change_time;

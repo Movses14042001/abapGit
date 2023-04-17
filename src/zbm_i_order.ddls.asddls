@@ -48,4 +48,3 @@ association to ZBM_I_PRODUCT as _Product on $projection.ProdUuid = _Product.Prod
     _Market
     
 }
-

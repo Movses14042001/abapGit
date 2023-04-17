@@ -1,4 +1,16 @@
 @Metadata.layer: #CORE
+@UI.chart: [{
+    qualifier: 'Chart1',  
+//    title: 'Flight Prices of this Travel by Airline',
+    chartType: #COMBINATION_DUAL,
+    dimensions: [ 'OrderId'],
+       measures: [ 'DeliveryDate'],
+    measureAttributes: [ {measure: 'DeliveryDate', role: #AXIS_1}],
+                        
+     
+    description: 'Chart shows flight prices of travel by the airlines used per each booking.'
+    }
+]
 @UI:{
     headerInfo : { typeName : 'Order',
     typeNamePlural : 'Orders',
@@ -34,6 +46,8 @@ annotate view ZBM_C_ORDER
                type: #DATAPOINT_REFERENCE,
                label: 'Start Date',
                targetQualifier: 'Orderid' },
+               
+            
                
 
 
