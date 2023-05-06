@@ -1,7 +1,7 @@
 CLASS lhc_Orrder DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
 
-    METHODS calculateAmount FOR DETERMINE ON MODIFY
+    METHODS calculateAmount FOR DETERMINE ON SAVE
       IMPORTING keys FOR Orrder~calculateAmount.
 
     METHODS calculateOrderId FOR DETERMINE ON MODIFY
@@ -19,15 +19,47 @@ CLASS lhc_Orrder IMPLEMENTATION.
 
   METHOD calculateAmount.
 
-  DATA Amount TYPE zbam1_netamount.
+
 
    READ ENTITIES OF zbm_i_product IN LOCAL MODE
     ENTITY Orrder
-   FIELDS ( Netamount Grossamount ) WITH CORRESPONDING #( keys )
+   FIELDS ( Netamount Grossamount Quantity  ) WITH CORRESPONDING #( keys )
    RESULT DATA(Orders).
 
    LOOP AT Orders INTO DATA(order).
-    Amount = order-Netamount + order-Grossamount.
+
+   READ ENTITIES OF zbm_i_product IN LOCAL MODE
+   ENTITY  Orrder BY \_Product
+   FIELDS ( Price Taxrate PriceCurrency ) WITH VALUE #( ( %tky = order-%tky ) )
+   RESULT DATA(Products).
+
+   LOOP AT Products INTO DATA(Product).
+
+    Order-Netamount = Product-price * Order-Quantity.
+
+    Order-Grossamount = Order-Netamount + (  Order-Netamount * product-Taxrate / 100 ).
+
+
+    MODIFY ENTITIES OF zbm_i_product IN LOCAL MODE
+    ENTITY Orrder
+   UPDATE FIELDS ( Netamount Grossamount Amountcurr ) WITH VALUE #( ( %tky        = Order-%tky
+                                                           Netamount   = Order-Netamount
+                                                           Grossamount = Order-Grossamount
+                                                           Amountcurr  = Product-PriceCurrency
+
+*                                                           %control-netamount = if_abap_behv=>mk-on
+*                                                           %control-grossamount = if_abap_behv=>mk-on
+*                                                           %control-amountcurrency = if_abap_behv=>mk-on
+ ) )
+                                                           REPORTED DATA(update_reported).
+
+
+
+   reported = CORRESPONDING #( DEEP update_reported ).
+
+   ENDLOOP.
+
+
    ENDLOOP.
 
 
@@ -43,7 +75,12 @@ CLASS lhc_Orrder IMPLEMENTATION.
    FIELDS ( Orderid ) WITH CORRESPONDING #( keys )
    RESULT DATA(Orders).
 
-   Max_orderid = '00000'.
+
+
+*   SELECT MAX( orderid )  FROM ZBM_D_MRKT_ORDER WHERE mrkt_uuid = Orders~
+*   INTO @DATA(new_orde1).
+*
+   Max_orderid = '0000000'.
    LOOP AT Orders INTO DATA(Order).
     IF Order-Orderid > max_orderid.
        max_orderid   = Order-OrderId.
@@ -121,6 +158,10 @@ INTO TABLE @DATA(StartDates).
 
  APPEND VALUE #( %tky        = Enddate-%tky
                  %state_area = 'VALIDATE_DELIVERY_DATE'
+                  %path       = VALUE #( product-%is_draft = Enddate-%is_draft
+                                        Product-produuid  = Enddate-produuid
+                                        market-%is_draft  = Enddate-%is_draft
+                                        market-produuid   = Enddate-produuid )
                  %msg        = NEW ZCM_RAP_BM(
                                  severity = if_abap_behv_message=>severity-error
                                  textid   = ZCM_RAP_BM=>delivery_bfore_start_date
@@ -132,6 +173,10 @@ INTO TABLE @DATA(StartDates).
 
  APPEND VALUE #( %tky        = Enddate-%tky
                  %state_area = 'VALIDATE_DELIVERY_DATE'
+                 %path       = VALUE #( product-%is_draft = Enddate-%is_draft
+                                        Product-produuid  = Enddate-produuid
+                                        market-%is_draft  = Enddate-%is_draft
+                                        market-produuid   = Enddate-produuid )
                  %msg        = NEW ZCM_RAP_BM(
                                  severity = if_abap_behv_message=>severity-error
                                  textid   = ZCM_RAP_BM=>delivery_equal_start_date

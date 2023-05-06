@@ -59,26 +59,6 @@ CLASS lhc_Product IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD moveToNextPhase.
-
-     READ ENTITIES OF zbm_i_product IN LOCAL MODE
-         ENTITY Product
-            FIELDS ( PhaseId ) WITH CORRESPONDING #( keys )
-         RESULT DATA(Phases).
-
-
-
-   MODIFY ENTITIES OF zbm_i_product IN LOCAL MODE
-    ENTITY Product
-        UPDATE FIELDS ( PhaseId )
-        WITH VALUE #( FOR Phase IN Phases
-                    ( %tky      = Phase-%tky
-                      PhaseId   = Phase-PhaseId + 1 ) )
-   REPORTED DATA(update_reported).
-
-  ENDMETHOD.
-
-
 
 
   METHOD setFirstPhase.
@@ -219,7 +199,7 @@ CLASS lhc_Product IMPLEMENTATION.
       " fill in travel container for creating new travel instance
       APPEND VALUE #( %cid      = keys[ KEY entity %key = <product>-%key ]-%cid
                      %is_draft = keys[ KEY entity %key = <product>-%key ]-%param-%is_draft
-                     %data     = CORRESPONDING #( <product> EXCEPT ProdId )
+                     %data     = CORRESPONDING #( <product> EXCEPT prodid )
                   )
       TO Products ASSIGNING FIELD-SYMBOL(<new_product>).
 
@@ -239,5 +219,79 @@ CLASS lhc_Product IMPLEMENTATION.
    mapped-product   =  mapped_create-Product .
 
   ENDMETHOD.
+
+   METHOD moveToNextPhase.
+
+
+
+
+     READ ENTITIES OF zbm_i_product IN LOCAL MODE
+         ENTITY Product
+            FIELDS ( Produuid PhaseId ) WITH CORRESPONDING #( keys )
+         RESULT DATA(Products).
+
+   LOOP AT Products INTO DATA(Product).
+
+
+   CASE Product-PhaseId.
+
+   WHEN 1.
+
+   READ ENTITIES OF zbm_i_product IN LOCAL MODE
+         ENTITY Product BY \_Market
+            FIELDS ( Produuid ) WITH VALUE #( ( %tky = Product-%tky
+                                                Produuid = Product-ProdUuid ) )
+         RESULT DATA(Markets).
+
+    LOOP AT Markets INTO DATA(Market).
+
+         IF Market IS NOT INITIAL.
+
+         Product-PhaseId = '2'.
+
+         ENDIF.
+    ENDLOOP.
+
+
+
+WHEN 2.
+
+
+READ ENTITIES OF zbm_i_product IN LOCAL MODE
+         ENTITY Product BY \_Market
+            FIELDS (  Status ) WITH VALUE #( ( %tky = Product-%tky
+                                                Produuid = Product-ProdUuid ) )
+         RESULT DATA(Statuses).
+
+LOOP AT Statuses INTO DATA(status).
+IF Status-Status = 'X'.
+ Product-PhaseId = '3'.
+ENDIF.
+ENDLOOP.
+
+ ENDCASE.
+
+    ENDLOOP.
+.
+
+
+
+   MODIFY ENTITIES OF zbm_i_product IN LOCAL MODE
+    ENTITY Product
+        UPDATE FIELDS ( PhaseId )
+        WITH VALUE #( ( %tky      = product-%tky
+                      PhaseId   = Product-PhaseId ) )
+   REPORTED DATA(update_reported).
+
+
+
+
+
+
+
+
+
+  ENDMETHOD.
+
 
 ENDCLASS.

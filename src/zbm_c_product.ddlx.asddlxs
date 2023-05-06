@@ -1,86 +1,86 @@
 @Metadata.layer: #CORE
 @UI:{
     headerInfo : { typeName : 'Kitchen Appliance', typeNamePlural : 'Kitchen Appliances', imageUrl: 'ImageUrl'} }
-    
+
 
 
 annotate view ZBM_C_PRODUCT with
 {
 
 
-        /* Header Facets*/
-  @UI.facet: [ { 
-                
+  /* Header Facets*/
+  @UI.facet: [ {
+
                id: 'Price',
                purpose:  #HEADER,
                position: 10,
                type: #DATAPOINT_REFERENCE,
                label: 'Net Price',
-               targetQualifier: 'Price' },     
+               targetQualifier: 'Price' },
               {
-              
+
                id: 'Product',
                purpose:  #HEADER,
                position: 20,
                type: #DATAPOINT_REFERENCE,
                label: 'Product ID',
                targetQualifier: 'ProdId' },
-               
-               { 
-               
+
+               {
+
                id: 'Rate',
                purpose:  #HEADER,
                position: 30,
                type: #DATAPOINT_REFERENCE,
                label: 'Tax Rate',
                targetQualifier: 'Taxrate' },
-               
-               
-               
+
+
+
                /* Collction Facets General*/
-               
+
                {
-  
+
                id: 'General',
                position: 10,
                type: #COLLECTION,
-               label: 'General Information'          
+               label: 'General Information'
                },
-               
+
                /* Collction Facets Admin*/
-               
+
                {
                id: 'Admin',
                position: 20,
                type: #COLLECTION,
                label: 'Admin Data',
-               targetQualifier: 'Admin' 
+               targetQualifier: 'Admin'
                },
-               
+
                    /* Standart Facets*/
                /* Identification References Admin*/
-               { 
+               {
                 parentId: 'Admin',
                purpose:  #STANDARD,
                position: 20,
                type: #IDENTIFICATION_REFERENCE,
                label: 'Create Info',
                targetQualifier: 'Admin' },
-                
-                
-                
+
+
+
                    /* Standart Facets*/
                /* Identification References Genaral*/
-               { 
+               {
                parentId: 'General',
                purpose:  #STANDARD,
                position: 10,
                type: #IDENTIFICATION_REFERENCE,
                label: 'Basic Data' },
-               
-               { 
-               
-               
+
+               {
+
+
                /* Standart Facets*/
                /* Field Groups Gneral*/
                id: 'Sizes',
@@ -90,112 +90,137 @@ annotate view ZBM_C_PRODUCT with
                type: #FIELDGROUP_REFERENCE,
                label: 'Size Dimensions',
                targetQualifier: 'Sizes' },
-               
-               { 
+
+               {
                parentId: 'General',
                purpose:  #STANDARD,
                position: 30,
                type: #FIELDGROUP_REFERENCE,
                label: 'Price Details',
                targetQualifier: 'Prices' },
-               
-               
+
+
                /* Standart Facets*/
                /* Field Groups Admin*/
-               
-               {  
+
+               {
                parentId: 'Admin',
                purpose:  #STANDARD,
                position: 20,
                type: #FIELDGROUP_REFERENCE,
                label: 'Create Time',
                targetQualifier: 'Time' },
-               
-               { 
+
+               {
                parentId: 'Admin',
                purpose:  #STANDARD,
                position: 30,
                type: #FIELDGROUP_REFERENCE,
                label: 'Change Info',
                targetQualifier: 'Info' },
-               
-               
-               
-               
+
+
+
+
                 /* Standart Facets*/
                /* LineItem References */
-               
+
                {id: 'Markett',
                label: 'Markets',
                purpose:  #STANDARD,
                position: 30,
                type: #LINEITEM_REFERENCE,
                targetElement: '_Market'
-               }]
-               
-               
-               
-               
+
+               },
 
 
-  
+                   /* Standart Facets*/
+               /* CHART References */
+
+    
+                {id:              'chartprod1',
+                label:           'Market Quantity',
+                position:        40,
+                purpose:         #STANDARD,
+                type:            #CHART_REFERENCE,
+                targetQualifier: 'chprod1',
+                targetElement:   '_Market'
+                  },
+    
+    
+                  { id:              'chartprod2',
+                label:           'Market Amount',
+                position:        50,
+                purpose:         #STANDARD,
+                type:            #CHART_REFERENCE,
+                targetQualifier: 'chprod2',
+                targetElement:   '_Market'
+                }]
+
+
+
+
+
+
+
   @UI:{ lineItem: [{position: 10 }],
       identification: [{position: 10 }],
       selectionField: [{position: 10}] }
-      
-      
- 
- 
+
+
+
+
   @UI.dataPoint:{ qualifier: 'ProdId'  }
   ProdId;
-  
+
   @UI:{ lineItem: [{position: 20 }]}
   @UI:{
       identification: [{position: 20 }],
-      selectionField: [{position: 30}] } 
-//  @UI.textArrangement: #TEXT_ONLY
-  PgId; 
-  
+      selectionField: [{position: 30}] }
+  @UI.textArrangement: #TEXT_ONLY
+  PgId;
+
 
   @UI: {  lineItem:       [ { position: 30, criticality: 'phascriticality' },
                        { type: #FOR_ACTION, dataAction: 'moveToNextPhase',   label: 'Move Phase', position : 20},
                        { type: #FOR_ACTION, dataAction: 'makeCopy',   label: 'Make Copy', position : 10}],
-                       
+
         identification: [ { position: 30, criticality: 'phascriticality'  },
                        { type: #FOR_ACTION, dataAction: 'moveToNextPhase',   label: 'Move Phase', position : 20},
                        { type: #FOR_ACTION, dataAction: 'makeCopy',   label: 'Make Copy', position : 10}],
                         selectionField: [{position: 20}] }
-                        
+
   PhaseId;
-  
- @UI.lineItem: [{ position: 40 }]
- Mesurement;
-        
- @UI.fieldGroup: [{ qualifier: 'Sizes', position: 10}]
+
+  @UI.lineItem: [{ position: 40 }]
+  Mesurement;
+
+  @UI.fieldGroup: [{ qualifier: 'Sizes', position: 10}]
   Height;
-  
-  
-      
+
+
+
   @UI.fieldGroup: [{ qualifier: 'Sizes', position: 20 }]
   Depth;
-  
-  
-      
+
+
+
   @UI.fieldGroup: [{ qualifier: 'Sizes', position: 30 }]
   Width;
-  
+
   @UI:{ lineItem:      [{position: 40 }],
        selectionField: [{position: 80}] }
-       
+
   @UI.dataPoint:{ qualifier: 'Price' }
-  
+
   @UI.fieldGroup: [{ qualifier: 'Prices', position: 10 }]
   Price;
 
   @UI:{ lineItem:      [{position: 50 }]}
-       
+
   @UI.dataPoint:{ qualifier: 'Taxrate' }
-  
+
   @UI.fieldGroup: [{ qualifier: 'Prices', position: 20 }]
   Taxrate;
 

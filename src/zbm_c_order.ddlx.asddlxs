@@ -1,176 +1,226 @@
 @Metadata.layer: #CORE
-@UI.chart: [{
-    qualifier: 'Chart1',  
-//    title: 'Flight Prices of this Travel by Airline',
-    chartType: #COMBINATION_DUAL,
-    dimensions: [ 'OrderId'],
-       measures: [ 'DeliveryDate'],
-    measureAttributes: [ {measure: 'DeliveryDate', role: #AXIS_1}],
-                        
-     
-    description: 'Chart shows flight prices of travel by the airlines used per each booking.'
-    }
-]
 @UI:{
     headerInfo : { typeName : 'Order',
     typeNamePlural : 'Orders',
     typeImageUrl:  'https://i7.pngguru.com/preview/423/632/57/computer-icons-purchase-order-order-fulfillment-purchasing-order-icon.jpg',
     title: { type: #STANDARD}}}
- 
-annotate view ZBM_C_ORDER
-    with 
+
+
+@UI.chart: [{qualifier: 'Chart2',
+    chartType: #BAR,
+    dimensions: [ 'DeliveryDate'],
+    measures: [ 'Netamount', 'Grossamount'],
+    measureAttributes: [ {measure: 'Netamount', role: #AXIS_1},
+                         {measure: 'Grossamount', role: #AXIS_2} ],
+    dimensionAttributes: [ {dimension: 'DeliveryDate', role: #CATEGORY } ]
+    },
+    
+    {qualifier: 'Chart1',
+    chartType: #BAR,
+    dimensions: [ 'DeliveryDate'],
+    measures: ['Quantity'],
+    measureAttributes: [ {measure: 'Quantity', role: #AXIS_1}],
+    dimensionAttributes: [ {dimension: 'DeliveryDate', role: #CATEGORY } ]
+    }
+]
+
+
+
+annotate view ZBM_C_ORDER with
 {
 
-@UI.facet: [ {  id: 'gros',
-               purpose: #STANDARD,
-               position: 10,
-                type: #DATAPOINT_REFERENCE,
-               label: 'Gross Amount',
-               targetQualifier: 'Grossamount'
-                },     
-              {
-              
-               id: 'net',
-                 purpose: #STANDARD,
-               position: 20,
-               type: #DATAPOINT_REFERENCE,
-               label: 'Net Amounnt',
-               targetQualifier: 'Netamount' 
-                },
-               
-               { 
-               
-               id: 'Sdat',
-                 purpose: #STANDARD,
-               position: 30,
-               type: #DATAPOINT_REFERENCE,
-               label: 'Start Date',
-               targetQualifier: 'Orderid' },
-               
-            
-               
+
+  @UI.facet: [
+   {
 
 
-         {
-          id: 'General',
-          purpose: #STANDARD,
-          type: #COLLECTION,
-          label: 'General Information',
-          position: 10
-          },
-          
-        
-          
-           /* Collction Facets Admin*/
-          {
-          id: 'Admin',
-          purpose: #STANDARD,
-          type: #COLLECTION,
-          label: 'Admin Data',
-          position: 20 
-          },
-             
+                 id: 'Edat',
+                 purpose: #HEADER,
+                 position: 10,
+                  type: #DATAPOINT_REFERENCE,
+                 label: 'End Date',
+                 targetQualifier: 'Grossamountq'
+                  },
+                {
+
+                 id: 'Countr',
+                   purpose: #HEADER,
+                 position: 20,
+                 type: #DATAPOINT_REFERENCE,
+                 label: 'Country',
+                 targetQualifier: 'Netamountq'
+                  },
+
+                 {
+
+                 id: 'SdatNEW',
+                   purpose: #HEADER,
+                 position: 30,
+                 type: #DATAPOINT_REFERENCE,
+                 label: 'Start Date',
+                 targetQualifier: 'Orderide' },
+
+
+                 {  id: 'gros',
+                 purpose: #STANDARD,
+                 position: 10,
+                  type: #DATAPOINT_REFERENCE,
+                 label: 'Gross Amount',
+                 targetQualifier: 'Orderid'
+                  },
+                {
+
+                 id: 'net',
+                   purpose: #STANDARD,
+                 position: 20,
+                 type: #DATAPOINT_REFERENCE,
+                 label: 'Net Amounnt',
+                 targetQualifier: 'Netamount'
+                  },
+
+                 {
+
+                 id: 'Sdat',
+                   purpose: #STANDARD,
+                 position: 30,
+                 type: #DATAPOINT_REFERENCE,
+                 label: 'Start Date',
+                 targetQualifier: 'Orderid' },
+
+
+
+           {
+            id: 'General',
+            purpose: #STANDARD,
+            type: #COLLECTION,
+            label: 'General Information',
+            position: 10
+            },
+
+
+
+             /* Collction Facets Admin*/
+            {
+            id: 'Admin',
+            purpose: #STANDARD,
+            type: #COLLECTION,
+            label: 'Admin Data',
+            position: 20
+            },
+
+                  /* Standart Facets*/
+            /* Identification References Basic*/
+            {
+             id: 'Basic',
+            purpose: #STANDARD,
+            type: #IDENTIFICATION_REFERENCE,
+            parentId: 'General',
+            label: 'Basic Data',
+            position: 10,
+            targetQualifier: 'BasicData'
+            },
+
+
+                  /* Standart Facets*/
+            /* Identification References Admin*/
+            {
+            id: 'Adminid',
+            purpose: #STANDARD,
+            type: #IDENTIFICATION_REFERENCE,
+            parentId: 'Admin',
+            label: 'Admin Data',
+            targetQualifier: 'Admin',
+            position: 20
+            },
                 /* Standart Facets*/
-          /* Identification References Basic*/
-          {
-           id: 'Basic',
-          purpose: #STANDARD,
-          type: #IDENTIFICATION_REFERENCE,
-          parentId: 'General',
-          label: 'Basic Data',
-          position: 10,
-          targetQualifier: 'BasicData'
-          },
-          
-            
-                /* Standart Facets*/
-          /* Identification References Admin*/
-          { 
-          id: 'Adminid',
-          purpose: #STANDARD,
-          type: #IDENTIFICATION_REFERENCE,
-          parentId: 'Admin',
-          label: 'Admin Data',
-          targetQualifier: 'Admin',
-          position: 20
-          },
-              /* Standart Facets*/
-          /* Field Groups General*/
-          {   
-          id: 'deldate',
-          parentId: 'General',
-          position: 20,    
-          purpose:  #STANDARD,
-          type: #FIELDGROUP_REFERENCE,
-          targetQualifier: 'deldate' 
-          },
- 
-     
-          
-       
-           /* Standart Facets*/
-           /* Field Groups Admin*/
-           
-           {  
-           parentId: 'Admin',
-           purpose:  #STANDARD,
-           position: 20,
-           type: #FIELDGROUP_REFERENCE,
-           targetQualifier: 'Time' },
-           
-           { 
-           parentId: 'Admin',
-           purpose:  #STANDARD,
-           position: 30,
-           type: #FIELDGROUP_REFERENCE,
-           label: 'Change Info',
-           targetQualifier: 'Info' 
-           }]
-           
-   @UI.hidden: true
-   ProdUuid;
-    @UI.hidden: true
-   MrktUuid;
-   @UI.hidden: true
-   OrderUuid;
-   
-   
-   @UI:{ lineItem       : [{ position : 10 }]}
-   @UI:{identification : [{ qualifier: 'BasicData', position: 10}]}
-   Orderid;
-   
-   @UI:{lineItem       : [{ position : 20 }]}
-   @UI:{identification : [{ qualifier: 'BasicData', position: 20}]}
-   CalendarYear;
-   
-   
-   @UI:{ lineItem       : [{ position : 30 }]}
-   @UI.fieldGroup: [{ qualifier: 'deldate', position: 10}]
-   DeliveryDate;
-   
-   @UI:{lineItem       : [{ position : 40 }]}
-   @UI.fieldGroup: [{ qualifier: 'deldate', position: 20}]
-   Quantity;
-   
-   @UI:{lineItem       : [{ position : 50 }]}
-   Netamount;
-   
-   @UI:{ lineItem       : [{ position : 60 }]}
-   Grossamount;
-   
-   @UI.hidden: true
-   Amountcurr;
-   
+            /* Field Groups General*/
+            {
+            id: 'deldate',
+            parentId: 'General',
+            position: 20,
+            purpose:  #STANDARD,
+            type: #FIELDGROUP_REFERENCE,
+            targetQualifier: 'deldate'
+            },
+
+
+
+
+             /* Standart Facets*/
+             /* Field Groups Admin*/
+
+             {
+             parentId: 'Admin',
+             purpose:  #STANDARD,
+             position: 20,
+             type: #FIELDGROUP_REFERENCE,
+             targetQualifier: 'Time' },
+
+             {
+             parentId: 'Admin',
+             purpose:  #STANDARD,
+             position: 30,
+             type: #FIELDGROUP_REFERENCE,
+             label: 'Change Info',
+             targetQualifier: 'Info'
+             }]
+
+  @UI.hidden: true
+  ProdUuid;
+  @UI.hidden: true
+  MrktUuid;
+  @UI.hidden: true
+  OrderUuid;
+
+
+  @UI:{ lineItem       : [{ position : 10 }],
+   dataPoint:       { qualifier: 'Orderide' }}
+  @UI:{identification : [{ qualifier: 'BasicData', position: 10}]}
+  Orderid;
+
+
+
+  @UI:{lineItem       : [{ position : 20 }]}
+  @UI:{identification : [{ qualifier: 'BasicData', position: 20}]}
+  CalendarYear;
+
+
+  @UI:{ lineItem       : [{ position : 30 }]}
+  @UI.fieldGroup: [{ qualifier: 'deldate', position: 10}]
+  DeliveryDate;
+
+  @UI:{lineItem       : [{ position : 40 }]}
+  @UI.fieldGroup: [{ qualifier: 'deldate', position: 20}]
+  Quantity;
+
+  @UI:{lineItem       : [{ position : 50 }],
+   dataPoint:       { qualifier: 'Netamountq' }}
+  Netamount;
+
+  @UI:{ lineItem       : [{ position : 60 }],
+  dataPoint:       { qualifier: 'Grossamountq' }}
+
+  Grossamount;
+
+
+  @UI:{  lineItem       : [{ position : 70 }],
+     identification : [{ qualifier: 'BasicData', position: 20}]}
+  OrderStatus;
+
+
+  @UI.hidden: true
+  Amountcurr;
+
   @UI.identification: [{ qualifier: 'Admin', position: 10 }]
   CreatedBy;
-  
+
   @UI.fieldGroup: [{ qualifier: 'Time', position: 10, label: 'Create Time'}]
   CreationTime;
-  
+
   @UI.fieldGroup: [{ qualifier: 'Info', position: 10}]
   ChangedBy;
-  
+
   @UI.fieldGroup: [{ qualifier: 'Info', position: 20}]
   ChangeTime;
- 
+
 }

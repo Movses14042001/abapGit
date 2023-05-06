@@ -112,6 +112,8 @@ CLASS lhc_Market IMPLEMENTATION.
 
         APPEND VALUE #(  %tky        = Markt-%tky
                          %state_area = 'DUPLICATES'
+                         %path                = VALUE #( Product-%is_draft  = Markt-%is_draft
+                                                    Product-produuid = Markt-produuid )
                          %msg        = NEW ZCM_RAP_BM(
                                            severity   = if_abap_behv_message=>severity-error
                                            textid     = ZCM_RAP_BM=>assigned_market
@@ -158,6 +160,8 @@ CLASS lhc_Market IMPLEMENTATION.
 
         APPEND VALUE #(  %tky        = Market-%tky
                          %state_area = 'VALIDATE_MARKET'
+                         %path                = VALUE #( Product-%is_draft  = Market-%is_draft
+                                                    Product-produuid = Market-produuid )
                          %msg        = NEW ZCM_RAP_BM(
                                            severity   = if_abap_behv_message=>severity-error
                                            textid     = ZCM_RAP_BM=>market_unknown
@@ -188,6 +192,8 @@ CLASS lhc_Market IMPLEMENTATION.
 
         APPEND VALUE #( %tky        = Enddate-%tky
                         %state_area = 'VALIDATE_END_DATE'
+                        %path                = VALUE #( Product-%is_draft  = Enddate-%is_draft
+                                                    Product-produuid = Enddate-produuid )
                         %msg        = NEW zcm_rap_bm(
                                         severity = if_abap_behv_message=>severity-error
                                         textid   = zcm_rap_bm=>end_date_before_start_day
@@ -219,7 +225,7 @@ CLASS lhc_Market IMPLEMENTATION.
 
     READ ENTITIES OF zbm_i_product IN LOCAL MODE
       ENTITY Market
-      FIELDS ( MrktId Startdate ) WITH CORRESPONDING #( keys )
+      FIELDS ( Startdate ) WITH CORRESPONDING #( keys )
       RESULT DATA(StartDates).
 
 
@@ -230,11 +236,16 @@ CLASS lhc_Market IMPLEMENTATION.
                       %state_area = 'VALIDATE_START_DATE' )
                       TO reported-Market.
 
-      IF Startdate-Startdate < cl_abap_context_info=>get_system_date( ).
+
+
+
+      IF Startdate-Startdate < cl_abap_context_info=>get_system_date(  ).
         APPEND VALUE #( %tky = startdate-%tky ) TO failed-Market.
 
         APPEND VALUE #( %tky         = startdate-%tky
                         %state_area  = 'VALIDATE_START_DATE'
+                        %path                = VALUE #( Product-%is_draft  = startdate-%is_draft
+                                                    Product-produuid = startdate-produuid )
                         %msg         = NEW zcm_rap_bm(
                                                  severity      = if_abap_behv_message=>severity-error
                                                  textid        = zcm_rap_bm=>start_date_before_today

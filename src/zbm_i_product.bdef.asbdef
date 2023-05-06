@@ -76,13 +76,14 @@ etag master ChangeTime
 {
   update;
   delete;
-  association _Product { with draft;}
+  association _Product { with draft; }
   association _Orrder { create ( features : instance ); with draft; }
 
   field ( numbering : managed, readonly ) MrktUuid;
   field ( readonly ) ProdUuid, ChangeTime, ChangedBy, CreationTime, CreatedBy;
   field ( mandatory ) Mrktid, Startdate;
   field ( readonly ) Status;
+  field ( readonly ) IsoCode;
 
 
   validation validateMarket on save { field Mrktid; create; }
@@ -97,6 +98,7 @@ etag master ChangeTime
       ProdUuid     = prod_uuid;
       MrktUuid     = mrkt_uuid;
       MrktId       = mrkt_id;
+      IsoCode      = iso_code;
       Status       = status;
       Startdate    = startdate;
       Enddate      = enddate;
@@ -121,12 +123,13 @@ etag master ChangeTime
 {
   update;
   delete;
-  association _Product {with draft;}
+  association _Product { with draft; }
 
   field ( readonly ) ProdUuid, MrktUuid;
   field ( numbering : managed, readonly ) OrderUuid;
   field ( readonly ) ChangeTime, ChangedBy, CreationTime, CreatedBy;
   field ( mandatory ) Quantity, DeliveryDate;
+  field ( readonly ) OrderStatus;
 
 
 
@@ -139,20 +142,24 @@ etag master ChangeTime
   validation validateDeliveyDate on save { field DeliveryDate; create; }
   mapping for zbm_d_mrkt_order
     {
-      ProdUuid     = prod_uuid;
-      MrktUuid     = mrkt_uuid;
-      OrderUuid    = order_uuid;
-      Orderid      = orderid;
-      Quantity     = quantity;
-      DeliveryDate = delivery_date;
-      Netamount    = netamount;
-      Grossamount  = grossamount;
-      Amountcurr   = amountcurr;
-      CreatedBy    = created_by;
-      CalendarYear = calendar_year;
-      CreationTime = creation_time;
-      ChangedBy    = changed_by;
-      ChangeTime   = change_time;
+      ProdUuid        = prod_uuid;
+      MrktUuid        = mrkt_uuid;
+      OrderUuid       = order_uuid;
+      Orderid         = orderid;
+      CalendarYear    = calendar_year;
+      Quantity        = quantity;
+      DeliveryDate    = delivery_date;
+      Netamount       = netamount;
+      Grossamount     = grossamount;
+      Amountcurr      = amountcurr;
+      OrderStatus     = order_status;
+      BusPartnerName  = bus_part_name;
+      BusPartner      = bus_part;
+      BusPartnerGroup = bus_part_group;
+      CreatedBy       = created_by;
+      CreationTime    = creation_time;
+      ChangedBy       = changed_by;
+      ChangeTime      = change_time;
     }
 
 

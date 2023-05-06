@@ -7,6 +7,8 @@ define view entity ZBM_C_MARKET as projection on ZBM_I_MARKET as Market
 {
     key ProdUuid,
     key MrktUuid,
+    @EndUserText.label: 'ISO-Code'
+    IsoCode,
     @Search.defaultSearchElement: true
     @ObjectModel.text.element: ['Country']
     @EndUserText.label: 'Market'
@@ -25,10 +27,23 @@ define view entity ZBM_C_MARKET as projection on ZBM_I_MARKET as Market
     ChangeTime,
     Img,
     StatCriticality,
+    @EndUserText.label: 'Total Netamount'
+    @Semantics.amount.currencyCode: 'TotalAmountcurr'
+    TotalNetamount,
+    @EndUserText.label: 'Total Grossamount'
+    @Semantics.amount.currencyCode: 'TotalAmountcurr'
+    TotalGrossamount,
+    @EndUserText.label: 'Total Quantity'
+    TotalQuantity,
+    TotalAmountcurr,
+    
    
     
     /* Associations */
     _Product : redirected to parent ZBM_C_PRODUCT,
     _Orrder : redirected to composition child ZBM_C_ORDER,
-    _Market_t
+    _Market_t,
+    _Order_r
+// 
+    
 }

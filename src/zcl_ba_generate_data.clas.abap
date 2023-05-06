@@ -8,12 +8,12 @@ CLASS zcl_ba_generate_data DEFINITION
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-*
-*
-*
+
+
+
 CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
-*
-*
+
+
   METHOD if_oo_adt_classrun~main.
 
     DATA:
@@ -30,7 +30,7 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
 
 
     lt_marketsd = VALUE #(
-    ( mrkt_id = '3' mrkt_uuid = '72AD846C0C401EEDAF844F5302769A58'  status = '' prod_uuid = 'C6EF623455A21EDDAF833300F97C672C' ) ).
+    ( mrkt_id = '3' mrkt_uuid = '72AD846C0C401EEDAF844F5302769A59'  status = '' prod_uuid = 'B6EF623455A21EDDAF833300F97C672C' ) ).
 *
     lt_prod_grs = VALUE #(
         ( pg_id  = '1' pg_name = 'Microwave'      image_url = 'https://png.pngtree.com/png-clipart/20190517/original/pngtree-vector-microwave-oven-icon-png-image_4015182.jpg' )
@@ -115,15 +115,15 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
 *   insert the new table entries
     INSERT zbm_d_uom FROM TABLE @lt_uom.
 
-    lt_prod = VALUE #( ( width = '11' depth = '11' height = '11' pg_id = '1' phase_id = '1' prod_id = '1' prod_uuid = 'C6EF623455A21EDDAF833300F97C672C' ) ).
+    lt_prod = VALUE #( ( width = '11' depth = '11' price_currency = 'USD' price = '121' taxrate = '3' size_uom = 'CM'  height = '11' pg_id = '1' phase_id = '1' prod_id = '1' prod_uuid = 'B6EF623455A21EDDAF833300F97C672C' ) ).
 
 
-    it_ord  =  VALUE #( ( orderid = 1  mrkt_uuid = '72AD846C0C401EEDAF844F5302769A58'  order_uuid = '72AD846C0C401EEDAF844F5302769qeq' prod_uuid =  'C6EF623455A21EDDAF833300F97C672C' amountcurr = 'USD' ) ).
+    it_ord  =  VALUE #( ( orderid = 1  mrkt_uuid = ''  order_uuid = '72AD846C0C401EEDAF844F5302768' prod_uuid =  'B6EF623455A21EDDAF833300F97C672C' amountcurr = 'USD' ) ).
 
-    DELETE FROM zbm_d_product.
-    DELETE FROM zbm_d_mrkt_order.
-    DELETE FROM zbm_d_dproduct.
-    DELETE FROM zbm_d_dmarket.
+*    DELETE FROM zbm_d_product.
+*    DELETE FROM zbm_d_mrkt_order.
+*    DELETE FROM zbm_d_dproduct.
+*    DELETE FROM zbm_d_dmarket.
 *   insert the new table entries
   .  INSERT zbm_d_product FROM TABLE @lt_prod.
 
@@ -131,7 +131,7 @@ CLASS ZCL_BA_GENERATE_DATA IMPLEMENTATION.
 
 
 
-    DELETE FROM zbm_d_prod_mrkt.
+*    DELETE FROM zbm_d_prod_mrkt.
 *   insert the new table entries
     INSERT zbm_d_prod_mrkt FROM TABLE @lt_marketsd.
 

@@ -4,86 +4,84 @@
     typeNamePlural : 'Markets',
     imageUrl: 'Img',
     title: { type: #STANDARD}}}
-   
+    
+    
+@UI.chart: [{   qualifier: 'chprod1', chartType: #DONUT,
+    dimensions: [ 'MrktId'],
+    measures: [ 'TotalQuantity'],
+    measureAttributes: [ {measure: 'TotalQuantity', role: #AXIS_3 } ],  
+            
+    dimensionAttributes: [ {dimension: 'MrktId', role: #CATEGORY } ]
+     },
+
+    { qualifier: 'chprod2',    chartType: #BAR,
+    dimensions: [ 'MrktId'],
+    measures: [ 'TotalNetamount', 'TotalGrossamount'],
+    measureAttributes: [ {measure: 'TotalNetamount', role: #AXIS_1},
+                         {measure: 'TotalGrossamount', role: #AXIS_2} ],
+    dimensionAttributes: [ {dimension: 'MrktId', role: #CATEGORY } ] }]
      
-    
-    
+
+
+
+
+
 annotate view ZBM_C_MARKET with
 {
 
 
-        /* Header Facets*/
-  @UI.facet: [ 
-//                
-//               id: 'Edat',
-//               purpose: #STANDARD,
-//               position: 80,
-//                type: #DATAPOINT_REFERENCE,
-//               label: 'End Date',
-//               targetQualifier: 'Enddate'
-//                },     
-//              {
-//              
-//               id: 'Countr',
-//                 purpose: #STANDARD,
-//               position: 90,
-//               type: #DATAPOINT_REFERENCE,
-//               label: 'Country',
-//               targetQualifier: 'MrktId' 
-//                },
-//               
-//               { 
-//               
-//               id: 'Sdat',
-//                 purpose: #STANDARD,
-//               position: 100,
-//               type: #DATAPOINT_REFERENCE,
-//               label: 'Start Date',
-//               targetQualifier: 'Startdate' }]
-//               
+  /* Header Facets*/
+  @UI.facet:
+  [
+  //
+             {   id: 'Edat',
+               purpose: #HEADER,
+               position: 10,
+                type: #DATAPOINT_REFERENCE,
+               label: 'End Date',
+               targetQualifier: 'Endddate'
+                },
+                {
+  //
+                 id: 'Countr',
+                   purpose: #HEADER,
+                 position: 20,
+                 type: #DATAPOINT_REFERENCE,
+                 label: 'Country',
+                 targetQualifier: 'MrktIde'
+                  },
 
-       
+                 {
+
+                   id: 'SdatNEW',
+                   purpose: #HEADER,
+                 position: 30,
+                 type: #DATAPOINT_REFERENCE,
+                 label: 'Start Date',
+                 targetQualifier: 'Startdatee' },
+
+
+
          /* Collction Facets General*/
-         { 
+         {
           id: 'General',
           purpose: #STANDARD,
           type: #COLLECTION,
           label: 'General Information',
           position: 10
           },
-          
-        
-          
+
+
+
            /* Collction Facets Admin*/
           {
           id: 'Admin',
           purpose: #STANDARD,
           type: #COLLECTION,
           label: 'Admin Data',
-          position: 20 
+          position: 20
           },
-          
-          /* Chart Facets */
-          
-            { id: 'Chart_1',
-                label: 'Order Quantity',
-                position: 50,
-                purpose: #STANDARD,
-                targetElement: '_Orrder',
-                targetQualifier: 'Chart1',
-                type: #CHART_REFERENCE
-              },
-              
-              
-               { id: 'Chart_2',
-                label: 'Order Amount',
-                position: 60,
-                purpose: #STANDARD,
-                targetQualifier: 'Chart2',
-                targetElement: '_Orrder',
-                type: #CHART_REFERENCE
-              },
-             
+
                 /* Standart Facets*/
           /* Identification References Basic*/
           {
@@ -95,11 +93,11 @@ annotate view ZBM_C_MARKET with
           position: 10,
           targetQualifier: 'BasicData'
           },
-          
-            
+
+
                 /* Standart Facets*/
           /* Identification References Admin*/
-          { 
+          {
           id: 'Adminid',
           purpose: #STANDARD,
           type: #IDENTIFICATION_REFERENCE,
@@ -110,16 +108,16 @@ annotate view ZBM_C_MARKET with
           },
               /* Standart Facets*/
           /* Field Groups General*/
-          {   
+          {
           id: 'Conf',
           parentId: 'General',
-          position: 20,    
+          position: 20,
           purpose:  #STANDARD,
           type: #FIELDGROUP_REFERENCE,
-          targetQualifier: 'Conf' 
+          targetQualifier: 'Conf'
           },
- 
-          { 
+
+          {
           id: 'Change',
           parentId: 'General',
           purpose:  #STANDARD,
@@ -128,84 +126,130 @@ annotate view ZBM_C_MARKET with
           label: 'Change Info',
           targetQualifier: 'Change'
           },
-          
-       
+
+
            /* Standart Facets*/
            /* Field Groups Admin*/
-           
-           {  
+
+           {
            parentId: 'Admin',
            purpose:  #STANDARD,
            position: 20,
            type: #FIELDGROUP_REFERENCE,
            targetQualifier: 'Time' },
-           
-           { 
+
+           {
            parentId: 'Admin',
            purpose:  #STANDARD,
            position: 30,
            type: #FIELDGROUP_REFERENCE,
            label: 'Change Info',
-           targetQualifier: 'Info' 
+           targetQualifier: 'Info'
            },
+
             /* Standart Facets*/
            /* LineItem References */
-           
+
            {id: 'Orders',
            label: 'Orders',
            purpose:  #STANDARD,
            position: 40,
            type: #LINEITEM_REFERENCE,
            targetElement: '_Orrder'
-           }
+           },
+
+
+           /*CHART References*/
+
+           { id:              'chartmrkt1',
+            label:           'Order Quantity',
+            position:        50,
+            purpose:         #STANDARD,
+            type:            #CHART_REFERENCE,
+            targetQualifier: 'Chart1',
+            targetElement:   '_Orrder'
+              },
+              
+              
+              { id:              'chartmrkt2',
+            label:           'Order Amount',
+            position:        60,
+            purpose:         #STANDARD,
+            type:            #CHART_REFERENCE,
+            targetQualifier: 'Chart2',
+            targetElement:   '_Orrder'
+              }
+
            ]
-       
+
 
   @UI.hidden: true
   ProdUuid;
-  
+
   @UI.hidden: true
   MrktUuid;
- 
+
   @UI:{lineItem       : [{ position : 10}],
-       identification : [{ qualifier: 'BasicData', position: 10 }]}
+       identification : [{ qualifier: 'BasicData', position: 10 }],
+  dataPoint:       { qualifier: 'MrktIde', title : 'Country' }}
+
   @UI.selectionField: [{ position: 10 }]
-  @UI.textArrangement: #TEXT_ONLY
+  //  @UI.textArrangement: #TEXT_ONLY
   MrktId;
-  
-  @UI:{lineItem       : [{ position : 20, criticality: 'StatCriticality'},
+
+  @UI:{identification       : [{ qualifier: 'BasicData', position : 20}],
+       lineItem             : [{ position: 20 }]}
+
+  IsoCode;
+
+  @UI:{lineItem       : [{ position : 30, criticality: 'StatCriticality'},
                        { type: #FOR_ACTION, dataAction: 'confirm',   label: 'Confirm', position : 10}],
-                       
+
                        identification : [{ criticality: 'StatCriticality' },
                        { type: #FOR_ACTION, dataAction: 'confirm',   label: 'Confirm', position : 10}],
-                       
+
                        fieldGroup: [{ qualifier: 'Conf', position: 10, criticality: 'StatCriticality'},
                        { type: #FOR_ACTION, dataAction: 'confirm',   label: 'Confirm', position : 10}]}
   @UI.selectionField: [{ position: 20 }]
   Status;
-  
-  @UI:{ identification : [{ position: 20 }],
-       lineItem       : [{ position : 30 }]}
+
+  @UI:{ identification : [{ position: 30 }],
+       lineItem       : [{ position : 40 }],
+  dataPoint:       { qualifier: 'Startdatee'  }}
   @UI.fieldGroup: [{ qualifier: 'Change', position: 10}]
   Startdate;
-  
-  @UI:{lineItem       : [{ position : 40 }]}
+
+  @UI:{lineItem       : [{ position : 50 }],
+  dataPoint:       { qualifier: 'Endddate', title: 'End Date' }}
   @UI.fieldGroup: [{ qualifier: 'Change', position: 20}]
+
   Enddate;
   
+  
+  @UI:{lineItem       : [{ position : 60 }]}
+  TotalQuantity;
+  
+  @UI:{lineItem       : [{ position : 70 }]}
+  TotalNetamount;
+ 
+   @UI:{lineItem       : [{ position : 80 }]}
+   TotalGrossamount;
+
+
+
+
   @UI.identification: [{ qualifier: 'Admin', position: 10 }]
   CreatedBy;
-  
+
   @UI.fieldGroup: [{ qualifier: 'Time', position: 10, label: 'Create Time'}]
   CreationTime;
-  
- @UI.fieldGroup: [{ qualifier: 'Info', position: 10}]
+  @UI.fieldGroup: [{ qualifier: 'Info', position: 10}]
   ChangedBy;
-  
+
   @UI.fieldGroup: [{ qualifier: 'Info', position: 20}]
   ChangeTime;
-  
-  
- 
+
+
+
 
 }
