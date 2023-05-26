@@ -1,5 +1,9 @@
 CLASS zbp_bm_i_market DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zbm_i_product.
+protected section.
+private section.
 ENDCLASS.
 
-CLASS zbp_bm_i_market IMPLEMENTATION.
+
+
+CLASS ZBP_BM_I_MARKET IMPLEMENTATION.
 ENDCLASS.

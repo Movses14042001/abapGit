@@ -105,7 +105,7 @@ CLASS zcm_rap_bm DEFINITION
         marketid     TYPE zbam1_market_id      OPTIONAL
         startdate    TYPE zbam1_start_date     OPTIONAL
         enddate      TYPE zbam1_end_date       OPTIONAL
-        deliverydate TYPE zbam1_delivery_date  OPTIONAL.
+        deliverydate TYPE zbam_delivery_date  OPTIONAL.
 
 
 
@@ -115,7 +115,7 @@ CLASS zcm_rap_bm DEFINITION
     DATA   marketid      TYPE zbam1_market_id     READ-ONLY.
     DATA   startdate     TYPE zbam1_start_date    READ-ONLY.
     DATA   enddate       TYPE zbam1_end_date      READ-ONLY.
-    DATA   deliverydate  TYPE zbam1_delivery_date READ-ONLY.
+    DATA   deliverydate  TYPE zbam_delivery_date READ-ONLY.
         .
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -123,7 +123,7 @@ ENDCLASS.
 
 
 
-CLASS zcm_rap_bm IMPLEMENTATION.
+CLASS ZCM_RAP_BM IMPLEMENTATION.
 
 
   METHOD constructor ##ADT_SUPPRESS_GENERATION.

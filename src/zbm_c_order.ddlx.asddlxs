@@ -6,7 +6,7 @@
     title: { type: #STANDARD}}}
 
 
-@UI.chart: [{qualifier: 'Chart2',
+@UI.chart: [{qualifier: 'Chart1',
     chartType: #BAR,
     dimensions: [ 'DeliveryDate'],
     measures: [ 'Netamount', 'Grossamount'],
@@ -15,7 +15,7 @@
     dimensionAttributes: [ {dimension: 'DeliveryDate', role: #CATEGORY } ]
     },
     
-    {qualifier: 'Chart1',
+    {qualifier: 'Chart2',
     chartType: #BAR,
     dimensions: [ 'DeliveryDate'],
     measures: ['Quantity'],
