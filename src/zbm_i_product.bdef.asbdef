@@ -85,6 +85,7 @@ etag master ChangeTime
   field ( readonly ) Status;
   field ( readonly ) IsoCode;
 
+  determination setIsoCode on modify { create; }
 
   validation validateMarket on save { field Mrktid; create; }
   validation valideStartDate on save { field Startdate; create; }

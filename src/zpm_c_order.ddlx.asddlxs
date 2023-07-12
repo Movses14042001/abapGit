@@ -26,7 +26,7 @@
 
 
 
-annotate view ZBM_C_ORDER with
+annotate view ZPM_C_ORDER with
 {
 
 
@@ -188,27 +188,22 @@ annotate view ZBM_C_ORDER with
   @UI:{ lineItem       : [{ position : 30 }]}
   @UI.fieldGroup: [{ qualifier: 'deldate', position: 10}]
   DeliveryDate;
-  
-  @UI:{ lineItem :[ {  position : 40, label : 'Business Partner' }]}
- BusPartner;
- 
 
-
-  @UI:{lineItem       : [{ position : 50 }]}
+  @UI:{lineItem       : [{ position : 40 }]}
   @UI.fieldGroup: [{ qualifier: 'deldate', position: 20}]
   Quantity;
 
-  @UI:{lineItem       : [{ position : 60 }],
+  @UI:{lineItem       : [{ position : 50 }],
    dataPoint:       { qualifier: 'Netamountq' }}
   Netamount;
 
-  @UI:{ lineItem       : [{ position : 70 }],
+  @UI:{ lineItem       : [{ position : 60 }],
   dataPoint:       { qualifier: 'Grossamountq' }}
 
   Grossamount;
 
 
-  @UI:{  lineItem       : [{ position : 80 }],
+  @UI:{  lineItem       : [{ position : 70 }],
      identification : [{ qualifier: 'BasicData', position: 20}]}
   OrderStatus;
 
